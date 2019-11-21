@@ -1,0 +1,55 @@
+<style>
+*{
+    margin:0px;
+    padding:0px;
+}
+.picture{
+    width:250px;
+    height:300px;
+    border-style:dotted;
+    border-color:green;
+    border-radius:12px;
+    margin-left:15px;
+    padding:5px 10px;
+}
+#table{
+    width:350px;
+    height:200px;
+    background:green;
+    border-radius:12px;
+    padding:5px 10px;
+}
+
+.button{
+    background-color:#f8c471;
+    border-radius:12px;
+    color:black;
+    padding:15px 25px;
+    text-align:center;
+    font-size:14px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration:0.4s;
+
+}
+.button:hover{
+    background-color:white;
+    color:black;
+
+}
+  .left {
+    margin:0;
+    padding:0;
+    width:300px;
+    background-color:#f1f1f1;
+    height:100%;
+    overflow:auto;
+    position: fixed;
+}
+div.content{
+    margin-left:300px;
+    padding:1px 16px;
+    height: 1000px;
+}
+
+    
+</style>

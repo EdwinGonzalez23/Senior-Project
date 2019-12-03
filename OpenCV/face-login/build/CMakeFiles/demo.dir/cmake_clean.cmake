@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/demo.dir/login.cpp.o"
+  "CMakeFiles/demo.dir/readJson.cpp.o"
   "demo.pdb"
   "demo"
 )

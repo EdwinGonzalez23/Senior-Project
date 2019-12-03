@@ -17,6 +17,9 @@ class PersonData {
         }
 
         void addToList(list<int> imgData);
+        int getId() {return this->id;}
+        string getName() {return this->name;}
+        list<list<int>> getList() {return this->data;}
         void printList();
         void printInfo();
         void addInfo(int id, string name);

@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/edwin/Documents/c++/face-login/readJson.cpp" "/home/edwin/Documents/c++/face-login/build/CMakeFiles/demo.dir/readJson.cpp.o"
+  "/home/edwin/Documents/c++/face-login/readJson.cpp" "/home/edwin/Documents/c++/face-login/build/CMakeFiles/myprogram.dir/readJson.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

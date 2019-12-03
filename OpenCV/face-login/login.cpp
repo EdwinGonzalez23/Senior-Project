@@ -4,21 +4,73 @@
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/objdetect.hpp"
 #include "opencv2/imgproc.hpp"
+#include "read.h"
+#include "test.h"
+#include <jsoncpp/json/json.h>
+#include "PersonData.h"
+#include "DataHolder.h"
+#include <fstream>
 #include <iostream>
 #include <vector>
 #include <string>
 using namespace std;
 using namespace cv;
-using namespace cv::face;
-
+using namespace cv::face; 
+using namespace Json;
 //Function Headers
 void calcSimilar(vector<int>& tmp);
 void detectAndDisplay(Mat frame, vector<Rect> faces, Ptr<FacemarkKazemi> facemark, vector< vector<Point2f> >& shapes);
 static bool myDetector(InputArray image, OutputArray faces, CascadeClassifier *face_cascade);
-
+extern void printStuff();
 vector<int> topIds;
-int main(int argc, char const *argv[]) {
+int main(int argc, char const *argv[]) {  
     
+    
+    ifstream ifs("data.json");
+    Json::Reader reader;
+    Json::Value obj;
+    DataHolder holder;
+    list<int> testList(68,30);
+    list<int>::iterator test;
+    // for (test = testList.begin(); test != testList.end(); test++) {
+    //     cout << *test;
+    // }
+    
+    vector<int> ids(3,-1); //ids.resize(3);
+    reader.parse(ifs, obj);     // Reader can also read strings
+    const Value& edwin = obj["imageData"];
+    cout << edwin << endl;
+    cout << edwin.size() << endl;
+    for (int i = 0; i < edwin.size(); i++) {
+        int eid = edwin[i]["employeeId"].asInt();
+        string name = edwin[i]["name"].asString();
+        cout << "Adding: " << eid << " " << name << endl;
+        PersonData person(eid, name);
+        for (int j = 0; j < edwin[i]["data"].size(); j++) {
+            list<int> tmpList;
+            for (int k = 0; k < edwin[i]["data"][j].size(); k++)
+            {
+                int normalizedDataPoint = edwin[i]["data"][j][k].asInt();
+                cout << "fsdafsda " << normalizedDataPoint << endl;
+                tmpList.push_back(normalizedDataPoint);
+            }
+            person.addToList(tmpList);    
+        }
+        
+        holder.addToHolder(person);
+        // cout << "size: " << edwin[i]["data"][0].size() << endl;
+        // cout << edwin[i]["employeeId"];
+        // cout << edwin[i]["data"][0];
+    }
+    cout << "printing list\n";
+    //holder.printList();
+    holder.compareData(testList, ids);
+    cout << "\nTop three Ids: ";
+    for (int i = 0; i < ids.size(); i++) {
+        cout << ids[i] << " ";
+    }
+    cout << endl;
+    cout << "-----------------------------------" << endl;
     string filename = "face_landmark_model.dat";
     if (filename.empty()){
         
@@ -99,15 +151,15 @@ void detectAndDisplay(Mat img, vector<Rect> faces,Ptr<FacemarkKazemi> facemark, 
                     //     cout << "at: " << k << endl;
                     //     overall += 1;
                     // }
-                    cout << res << endl;
+                    //cout << res << endl;
                 }
                 
                     cout << endl;
             }
             //Calculate Camera Normalized Image Data Against Server Image Data
             calcSimilar(tmpLandmarks);
-            namedWindow("Detected_shape");
-            imshow("Detected_shape", img);
+            //namedWindow("Detected_shape");
+            //imshow("Detected_shape", img);
             waitKey(0);
         }
     } else {

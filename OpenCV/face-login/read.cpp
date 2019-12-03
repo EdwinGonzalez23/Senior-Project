@@ -1,14 +1,13 @@
 //#include <iostream>
 //Compile with g++ profile.cpp -ljsoncpp -o [name]
-#include <fstream>
-#include <jsoncpp/json/json.h>
+#include "read.h"
 #include "PersonData.h"
 #include "DataHolder.h"
 
 using namespace std;
 using namespace Json;
 
-int main() {
+void readLandmarkToMem() {
     ifstream ifs("data.json");
     Json::Reader reader;
     Json::Value obj;
@@ -51,7 +50,7 @@ int main() {
         cout << ids[i] << " ";
     }
     cout << endl;
-    cout << "End readJson.cpp " << endl;
+
     //Data has now been loaded, DataHolder contains ALl persons in memory, PASS Test Data and return In order highest 
     //holder.compareData(testList, ids);
     
@@ -60,5 +59,4 @@ int main() {
     //cout << "\n\n" << edwin;
     // cout << "Last name: " << obj["lastname"].asString() << endl;
     // cout << "First name: " << obj["firstname"].asString() << endl;
-    return 0;
 }

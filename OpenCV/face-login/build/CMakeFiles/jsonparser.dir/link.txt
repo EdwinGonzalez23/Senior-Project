@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC -g  -rdynamic CMakeFiles/jsonparser.dir/readJson.cpp.o  -o jsonparser -ljsoncpp 

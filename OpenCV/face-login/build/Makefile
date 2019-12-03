@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/edwin/Documents/c++/face-login-test
+CMAKE_SOURCE_DIR = /home/edwin/Documents/c++/face-login
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/edwin/Documents/c++/face-login-test/build
+CMAKE_BINARY_DIR = /home/edwin/Documents/c++/face-login/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/edwin/Documents/c++/face-login-test/build/CMakeFiles /home/edwin/Documents/c++/face-login-test/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/edwin/Documents/c++/face-login/build/CMakeFiles /home/edwin/Documents/c++/face-login/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/edwin/Documents/c++/face-login-test/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/edwin/Documents/c++/face-login/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -123,32 +123,32 @@ demo/fast:
 	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/build
 .PHONY : demo/fast
 
-login.o: login.cpp.o
+readJson.o: readJson.cpp.o
 
-.PHONY : login.o
+.PHONY : readJson.o
 
 # target to build an object file
-login.cpp.o:
-	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/login.cpp.o
-.PHONY : login.cpp.o
+readJson.cpp.o:
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/readJson.cpp.o
+.PHONY : readJson.cpp.o
 
-login.i: login.cpp.i
+readJson.i: readJson.cpp.i
 
-.PHONY : login.i
+.PHONY : readJson.i
 
 # target to preprocess a source file
-login.cpp.i:
-	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/login.cpp.i
-.PHONY : login.cpp.i
+readJson.cpp.i:
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/readJson.cpp.i
+.PHONY : readJson.cpp.i
 
-login.s: login.cpp.s
+readJson.s: readJson.cpp.s
 
-.PHONY : login.s
+.PHONY : readJson.s
 
 # target to generate assembly for a file
-login.cpp.s:
-	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/login.cpp.s
-.PHONY : login.cpp.s
+readJson.cpp.s:
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/readJson.cpp.s
+.PHONY : readJson.cpp.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... demo"
 	@echo "... edit_cache"
-	@echo "... login.o"
-	@echo "... login.i"
-	@echo "... login.s"
+	@echo "... readJson.o"
+	@echo "... readJson.i"
+	@echo "... readJson.s"
 .PHONY : help
 
 

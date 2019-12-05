@@ -71,23 +71,23 @@ int main(int argc, char const *argv[]) {
     }
     cout << endl;
     cout << "-----------------------------------" << endl;
-    string filename = "face_landmark_model.dat";
+    string filename = "build/face_landmark_model.dat";
     if (filename.empty()){
         
         cerr << "The name  of  the model file to be loaded for detecting landmarks is not found" << endl;
         return -1;
     }
     //string image(parser.get<string>("image"));
-    string image = "images/me1.jpg";
+    string image = "build/images/me1.jpg";
     //string image2 = "test.jpeg";
-    string image2 = "images/me2.jpg";
+    string image2 = "build/images/me2.jpg";
     if (image.empty()){
         
         cerr << "The name  of  the image file in which landmarks have to be detected is not found" << endl;
         return -1;
     }
     //string cascade_name(parser.get<string>("face_cascade"));
-    string cascade_name = "haarcascade_frontalface_default.xml";
+    string cascade_name = "build/haarcascade_frontalface_default.xml";
     if (cascade_name.empty()){
         cerr << "The name of the cascade classifier to be loaded to detect faces is not found" << endl;
         return -1;
@@ -95,7 +95,7 @@ int main(int argc, char const *argv[]) {
 
     /* Init only once */
     CascadeClassifier face_cascade;
-    face_cascade.load("haarcascade_frontalface_default.xml");
+    face_cascade.load("build/haarcascade_frontalface_default.xml");
     FacemarkKazemi::Params params;
     Ptr<FacemarkKazemi> facemark = FacemarkKazemi::create(params);
     facemark->setFaceDetector((FN_FaceDetector)myDetector, &face_cascade);

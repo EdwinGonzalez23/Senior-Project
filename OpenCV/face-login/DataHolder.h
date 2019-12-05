@@ -2,11 +2,12 @@
 #define DataHolder_H
 #include "PersonData.h"
 #include <list>
+#include <vector>
 using namespace std;
 
 class DataHolder {
     int rootSize;
-    list<PersonData> holder;
+    vector<PersonData> holder;
     public:
         DataHolder(){}
         DataHolder(int size) {
@@ -15,7 +16,7 @@ class DataHolder {
 
         void printList();
         void addToHolder(PersonData person);
-        void compareData(list<int> dataPoints, vector<int>& topThree);
+        void compareData(vector<int> dataPoints, vector<int>& topThree);
 };
 
 void DataHolder::addToHolder(PersonData person) {
@@ -23,67 +24,59 @@ void DataHolder::addToHolder(PersonData person) {
 }
 
 void DataHolder::printList() {
-    list<PersonData>::iterator dataIter;
-    for (dataIter = this->holder.begin(); dataIter != this->holder.end(); ++dataIter) {
-        cout << "ID: " << dataIter->getId() << " ";
-        cout << "Name: " << dataIter->getName() << endl;
+
+    for (int i = 0; i < this->holder.size(); i++) {
+        cout << "ID: " << holder[i].getId() << " ";
+        cout << "Name: " << holder[i].getName() << endl;
         cout << "List:  \n";
-        list<list<int>> pData = dataIter->getList();
-        list<list<int>>::iterator personDataIter;
+        vector<vector<int> > dataSet = holder[i].getList();
         int listCounter = 0;
-        for (personDataIter = pData.begin(); personDataIter != pData.end(); ++personDataIter) {
+        for (int j = 0; j < dataSet.size(); j++) {
             listCounter++;
             cout << "set " << listCounter << "\n";
-            list<int>::iterator singleListIter; 
-            list<int>& singleListPointer = *personDataIter; 
-            for (singleListIter = singleListPointer.begin(); singleListIter != singleListPointer.end(); singleListIter++) { 
-                
-                std::cout << " " << *singleListIter << " "; 
-            }
-            cout << "\n\n";
-        }   
+            for (int k = 0; k < dataSet[i].size(); k++)
+                std::cout << " " << dataSet[i][j] << " ";
+        }
+
     }
 }
-
-void DataHolder::compareData(list<int> dataPoints, vector<int>& topThree) {
+//Data Points are Passed in Scanned Image
+void DataHolder::compareData(vector<int> dataPoints, vector<int>& topThree) {
     int threshold = 7;  string a, b, c; int ida, idb, idc;
     int mina = 0; int minb = 0; int minc = 0;
-    list<PersonData>::iterator dataIter;
-    list<int>::iterator dataPointIter;int outerCounter = 0;
-    for (dataIter = this->holder.begin(); dataIter != this->holder.end(); ++dataIter) {
-        int currentID = dataIter->getId();
-        string currentName = dataIter->getName();
-         cout << "ID: " << currentID << " ";
-        cout << "Name: " << dataIter->getName() << endl;
+    int outerCounter = 0;
+    //Loop through DataHolder
+    for (int i = 0; i < this->holder.size(); ++i) {
+        int currentID = holder[i].getId();
+        string currentName = holder[i].getName();
+        //cout << "ID: " << currentID << " ";
+        //cout << "Name: " << currentName << endl;
         // cout << "List:  \n";
-        list<list<int>> pData = dataIter->getList();
-        list<list<int>>::iterator personDataIter;
-        list<int>::iterator testDatIter;
+        vector<vector<int> > dataSet = holder[i].getList();
         int listCounter = 0; int totalHits = 0; 
-        for (personDataIter = pData.begin(); personDataIter != pData.end(); ++personDataIter) {
+        //Loop through DataSets per Holder Element
+        for (int j = 0; j < dataSet.size(); ++j) {
             listCounter++;
             //cout << "set " << listCounter << "\n";
-            list<int>::iterator singleListIter; 
-            list<int>& singleListPointer = *personDataIter; 
-            
-            for (singleListIter = singleListPointer.begin(), dataPointIter = dataPoints.begin(); singleListIter != singleListPointer.end() && dataPointIter != dataPoints.end(); singleListIter++, dataPointIter++) { 
-                
-                //std::cout << " " << *singleListIter << " "; 
-                //cout << " " << *dataPointIter << " ";
-                if (abs(*singleListIter - *dataPointIter) <= threshold) {
-                    //cout << "Data Point Match " << *singleListIter << " - " << *dataPointIter << endl;
+            //SINGLE (will make multiple sets eventually)
+            int index = 0;
+            for (int k = 0; k < dataSet[j].size(); k++) {
+                if (abs(dataSet[j][k] - dataPoints[i]) <= threshold) {
                     totalHits++;
+                    index++;
                 }
+                    
             }
+
             //cout << "\n\n";
         }
         outerCounter++;
-        cout << "List counter " << outerCounter << endl;
-        cout << "totl hits: " << dataIter->getName() << " " << totalHits << endl;
-        cout << "Current Min A B C: " << mina << " " << minb << " " << minc << " \n" << endl;
+        // cout << "List counter " << outerCounter << endl;
+        // cout << "totl hits: " << currentName << " " << totalHits << endl;
+        // cout << "Current Min A B C: " << mina << " " << minb << " " << minc << " \n" << endl;
         
         if (totalHits >= mina) { //first place
-        cout << "A section " << currentID << endl;
+        //cout << "A section " << currentID << endl;
             if (a.empty()) {
                 mina = totalHits;
                 ida = currentID;

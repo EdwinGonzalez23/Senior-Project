@@ -81,7 +81,7 @@ To run compile a program.
 
 ``$ g++ demo.cpp `pkg-config --cflags --libs opencv4` ``
 
-##How to install JsonCPP##
+## How to install JsonCPP ##
 
 1. Follow the instructions here to compile a sample program -> https://linux.tips/programming/how-to-install-and-use-json-cpp-library-on-ubuntu-linux-os
 

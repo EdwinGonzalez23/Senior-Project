@@ -46,7 +46,7 @@
    And this will compile your program.
 
 
-##Compile using pkg-config (what we will be using)##
+## Compile using pkg-config (what we will be using) ##
 
 First, make sure you install OpenCV.
 

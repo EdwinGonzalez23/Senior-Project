@@ -3,12 +3,13 @@
 #include <list>
 #include <string>
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class PersonData {
     int id;
     string name;
-    list<list<int>> data;
+    vector<vector<int>> data;
     public:
         PersonData() {}
         PersonData (int id, string name) {
@@ -16,16 +17,16 @@ class PersonData {
             this->name = name;
         }
 
-        void addToList(list<int> imgData);
+        void addToList(vector<int> imgData);
         int getId() {return this->id;}
         string getName() {return this->name;}
-        list<list<int>> getList() {return this->data;}
+        vector<vector<int>> getList() {return this->data;}
         void printList();
         void printInfo();
         void addInfo(int id, string name);
 };
 
-void PersonData::addToList(list<int> imgData) {
+void PersonData::addToList(vector<int> imgData) {
     this->data.push_back(imgData);
 }
 
@@ -40,19 +41,12 @@ void PersonData::printInfo() {
 }
 
 void PersonData::printList() {
-    list<list<int>>::iterator dataIter;
-    
-    for (dataIter = this->data.begin(); dataIter != this->data.end(); ++dataIter) {
-        
-        list<int>::iterator singleListIter; 
-  
-        list<int>& singleListPointer = *dataIter; 
-  
-        for (singleListIter = singleListPointer.begin(); singleListIter != singleListPointer.end(); singleListIter++) { 
-            
-            std::cout << " " << *singleListIter << " "; 
-        }
-        cout << "\n\n";
+
+    for (int i = 0; i < this->data.size(); i++) {
+        for (int j = 0; j < this->data[i].size(); j++)
+            cout << " " << data[i][j] << " ";
     }
+    cout << "\n" << endl;
+    
 }
 #endif

@@ -1,0 +1,32 @@
+[13-Nov-2019 07:37:43 America/Los_Angeles] PHP Warning:  file_put_contents(../../json/table-assign.json): failed to open stream: Permission denied in /home/stu/egonzalez/public_html/senior/scripts/php/addcustomer.php on line 29
+[13-Nov-2019 07:39:49 America/Los_Angeles] PHP Warning:  file_put_contents(../../json/table-assign.json): failed to open stream: Permission denied in /home/stu/egonzalez/public_html/senior/scripts/php/addcustomer.php on line 29
+[14-Nov-2019 09:54:50 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[14-Nov-2019 09:56:56 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[14-Nov-2019 10:31:00 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[14-Nov-2019 10:31:44 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[14-Nov-2019 10:35:24 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[14-Nov-2019 11:10:04 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[14-Nov-2019 12:30:52 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[14-Nov-2019 12:34:00 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[14-Nov-2019 19:46:25 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[14-Nov-2019 19:47:47 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 00:02:04 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 00:40:33 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 08:04:59 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 12:09:23 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 12:21:29 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 12:38:39 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 12:41:44 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 12:56:38 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 12:56:45 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 12:56:49 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 12:58:07 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 14:14:04 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 14:14:14 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 14:14:29 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 14:50:32 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 14:50:39 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 15:30:21 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 16:34:51 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 16:34:57 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8
+[15-Nov-2019 16:37:33 America/Los_Angeles] PHP Notice:  Undefined index: password in /home/stu/egonzalez/public_html/senior/scripts/php/login.php on line 8

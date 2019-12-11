@@ -72,48 +72,71 @@ void DataHolder::compareData(vector<int> dataPoints, vector<int>& topThree) {
         }
         outerCounter++;
         // cout << "List counter " << outerCounter << endl;
-        // cout << "totl hits: " << currentName << " " << totalHits << endl;
-        // cout << "Current Min A B C: " << mina << " " << minb << " " << minc << " \n" << endl;
+         cout << "totl hits: " << currentName << " " << totalHits << endl;
+         cout << "Current Min A B C: " << mina << " " << minb << " " << minc << " \n" << endl;
         
         if (totalHits >= mina) { //first place
         //cout << "A section " << currentID << endl;
-            if (a.empty()) {
+            if (mina == totalHits) {
+                if (mina == 0) {
                 mina = totalHits;
                 ida = currentID;
                 a = currentName;
                 topThree[0] = currentID;
-            } else if (!a.empty() && b.empty()) {
-                minb = totalHits;
-                idb = currentID;
-                b = currentName;
-                topThree[1] = currentID;
-            } else if (!a.empty() && !b.empty() && c.empty()) {
-                minc = totalHits;
-                idc = currentID;
-                c = currentName;
-                topThree[2] = currentID;
-            } 
+                } else if (mina != 0 && minb == 0) {
+                    minb = totalHits;
+                    idb = currentID;
+                    b = currentName;
+                    topThree[1] = currentID;
+                } else if (mina != 0 && minb != 0 && minc == 0) {
+                    minc = totalHits;
+                    idc = currentID;
+                    c = currentName;
+                    topThree[2] = currentID;
+                }
+            } else if (totalHits > mina) {
+                mina = totalHits;
+                ida = currentID;
+                a = currentName;
+                topThree[0] = currentID;
+            }
+             
         } else if (totalHits < mina && totalHits >= minb) { //2nd place
         cout << "B section " << currentID << endl;
-            if (b.empty()) {
+            if (totalHits == minb) {
+                if (b.empty()) {
                 minb = totalHits;
                 idb = currentID;
                 b = currentName;
                 topThree[1] = currentID;
-            } else if (!b.empty() && c.empty()) {
-                minc = totalHits;
-                idc = currentID;
-                c = currentName;
-                topThree[2] = currentID;
+                } else if (minb != 0 && minc == 0) {
+                    minc = totalHits;
+                    idc = currentID;
+                    c = currentName;
+                    topThree[2] = currentID;
+                }
+            } else if (totalHits > minb) {
+                minb = totalHits;
+                idb = currentID;
+                b = currentName;
+                topThree[1] = currentID;
             }
-        } else if (totalHits < minb && totalHits >= minc) {
+            
+        } else if (totalHits < minb && totalHits > minc) {
             cout << "A section " << currentID << endl;
-            if (c.empty()) {
-                minc = totalHits;
-                idc = currentID;
-                c = currentName;
-                topThree[2] = currentID;
-            }
+            minc = totalHits;
+            idc = currentID;
+            c = currentName;
+            topThree[2] = currentID;
+            // if (totalHits == minc) {
+
+            // }
+            // if (c.empty()) {
+            //     minc = totalHits;
+            //     idc = currentID;
+            //     c = currentName;
+            //     topThree[2] = currentID;
+            // }
         } else {
             cout << "Nothing " << endl;
         }

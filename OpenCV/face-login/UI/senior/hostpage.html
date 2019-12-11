@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+    <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+        <style>
+body {
+    margin: 0;
+    font-family: "Lato", sans-serif;
+    background-color: #ffffff;
+}
+
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+.sidebar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.sidebar a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.sidebar a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+div.content {
+    margin-left: 200px;
+    padding: 1px 16px;
+    height: 1000px;
+}
+
+          @media screen and (max-width: 700px) {
+              .sidebar {
+                  width: 100%;
+                  height: auto;
+                  position: relative;
+              }
+              .sidebar a {float: left;}
+              div.content {margin-left: 0;}
+          }
+
+          @media screen and (max-width: 400px) {
+              .sidebar a {
+                  text-align: center;
+                  float: none;
+              }
+          }
+        </style>
+    </head>
+
+
+    <body>
+
+        <div class="sidebar">
+            <a class="active" href="#party">Party</a>
+            <a href="#guests">Guests</a>
+            <a href="hostpage.html">Refresh</a>
+            <p>Welcome: <span id="ename"></span></p>
+            <button class="btn btn-primary" onclick="logout();">Log out</button>
+            
+            <p>Add a party!</p>
+            <form action="scripts/php/addcustomer.php" method="post">
+                <input type="text" name="plname" placeholder="Enter Customer Name">
+                <input type="number" name="plid" placeholder="Enter Customer ID">
+                <input type="text" name="pOrder" placeholder="Enter Party Order">
+                <input type="number" name="pNumGuests" placeholder="How many guests?">
+                <input type="number" name="pTableNum" placeholder="Which Table?">
+                <input type="text" name="pServer" placeholder="Assign a server">
+                <input type="submit" value="submit">
+            </form>
+            
+        </div>
+
+        <div class="content">
+            <div class="container">
+                <h2><br><center>Host</center></h2>
+            <h3>Current</h3>
+            <p><small>
+            <script>
+            document.write(Date());
+            </script>
+            </small>
+            </p>
+
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Party Order</th>
+                        <th>Name</th>
+                        <th>Number of Guests</th>
+                        <th>Time Waiting</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Order 1</td>
+                        <td>Joe</td>
+                        <td>4</td>
+                        <td>18 minutes</td>
+                    </tr>
+                    <tr>
+                        <td>Order 2</td>
+                        <td>Don</td>
+                        <td>5</td>
+                        <td>11 minutes</td>
+                    </tr>
+                    <tr>
+                        <td>Order 3</td>
+                        <td>Jill</td>
+                        <td>9</td>
+                        <td>5 minutes</td>
+                    </tr>
+                    <tr>
+                        <td>Order 4</td>
+                        <td>Bill</td>
+                        <td>2</td>
+                        <td>4 minutes</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <h2>ADD A CUSTOMER TO DYNAMICALLY ADD TO THE TABLE</h2>
+            <p>Can't remove at moment, Simply remove data from table-assign.json. The Empty JSON file is not actually Empty, it should look like the empty.json file provided.</p>
+            <table class="table table-bordered" id="js-table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Party Order</th>
+                        <th>Name</th>
+                        <th>Number of Guests</th>
+                        <th>Assigned Sever</th>
+                        <th>Time Waiting</th>
+                    </tr>
+                </thead>
+                <tbody id="js-table-body">
+                
+                </tbody>
+            </table>
+
+
+            </div>
+        </div>
+
+        <script>
+            
+        </script>
+        <script src="scripts/js/scripts.js"></script>
+        <script src="scripts/js/host-scripts.js"></script>
+    </body>
+</html>
+
+

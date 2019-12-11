@@ -1,0 +1,171 @@
+<!--<?php include('./nav.php'); ?>
+	<?php /* This file used to do stuff */ ?>
+-->
+<!DOCTYPE html>    
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- Bootstrap CSS -->
+
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="https://github.com/kswedberg/jquery-smooth-scroll/blob/master/jquery.smooth-scroll.min.js"></script>
+
+
+		<link rel='stylesheet' type='text/css' href='bootstrap.css'>
+		<script type='text/javascript' src='project.js'></script>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+		<script
+		  src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+	integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+ crossorigin="anonymous"></script>
+
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+		<link rel='stylesheet' type='text/css' href='style.css'>
+
+
+
+		<title>Server</title>
+
+	</head>
+	<body>
+		<div class='row'>
+			<div class='col-md-4'>
+				<div id="picture">
+					<p> Picture of server</p>
+				</div>
+				<div>
+					<p>Show information of server<br>
+					Name of Server</p>
+
+
+				</div>
+			</div>
+			<div class='content'>
+				<div class='col-lg-12'>
+					<center><h1>Server GUI</h1></center>
+					<button type="button" class="button">Me</button>
+					<button type="button" class="button">All</button>
+					<br>
+					<br>
+					<section>
+						<div class='container-fluid'id="rectangle">
+							<center><p>Table No.1</p><br></center>
+							<input type="button" value="Start count!" onclick="doTimer()" />
+							<input type="text" id="txt1"  />
+							<input type="text" id="txt" /><br>
+
+							<p>Greeting: <span id="greeting"></span></p>
+							<p>Timer: <span id="timer"></span></p>
+							<p>Party Leader ID: <span id="pid"></span></p>
+							<p>Party Leader: <span id="pleader"></span></p>
+
+							<!--
+		   <input type="button" value="Start count!" onclick="doTimer()" />
+		   <input type="text" id="txt1"  />
+		   <input type="text" id="txt" />
+		   <br>
+		   <label for="current time">Current time waiting:</label><br> 
+		   <label for="longest time">Longest time waiting:</label><br> 
+		   <label for="server">Server:</label><br> 
+		   <label for="guest">Guest:</label><br> -->
+		   <!--<input type"button" value="Stop count!" onclick="stopCount()" />-->
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+<div>
+<div>
+<button onclick='set_timer()' class='button'>START</button>
+<button onclick='stop_timer()' class='button'>STOP</button>
+<label id="minutes">00</label><span class='bigger'>:</span><label id="seconds">00</label>
+</div>
+<div>
+
+
+<div id="topBar"> <a href ="#" onclick="load_home()"> HOME </a> </div>
+<div id ="content"> </div>
+
+</div>
+		
+<!---------------------------------------------------------------------------------------->
+
+		<script type="text/javascript">
+////////////////////////////////////////////////////////
+var s=0;
+var t;
+var timer_is_on=0;
+function timedCount()
+{
+	document.getElementById('txt').value=pad(s%60);
+	document.getElementById('txt1').value=pad(parseInt(s/60));
+	s=s+1;
+	t=setTimeout("timedCount()",1000);
+}
+function doTimer()
+{
+	if (!timer_is_on)
+	{
+		timer_is_on=1;
+		timedCount();
+	}
+}
+function stopCount()
+{
+	clearTimeout(t);
+	timer_is_on=0;
+}
+function pad(val) {
+	var valString = val + "";
+	if (valString.length < 2) {
+		return "0" + valString;
+	} else {return valString;}
+}
+/////////////////////////////////////////////////////////////////////
+function pad(val) {
+  valString = val + "";
+  if(valString.length < 2) {
+     return "0" + valString;
+     } else {
+     return valString;
+     }
+}
+
+totalSeconds = 0;
+function setTime(minutesLabel, secondsLabel) {
+    totalSeconds++;
+    secondsLabel.innerHTML = pad(totalSeconds%60);
+    minutesLabel.innerHTML = pad(parseInt(totalSeconds/60));
+    }
+
+function set_timer() {
+    minutesLabel = document.getElementById("minutes");
+    secondsLabel = document.getElementById("seconds");
+    my_int = setInterval(function() { setTime(minutesLabel, secondsLabel)}, 1000);
+}
+
+function stop_timer() {
+  clearInterval(my_int);
+}
+////////////////////////////////////////////////////////////////////////////////
+function load_home() {
+     document.getElementById("content").innerHTML='<object type="text/html" data="home.html" ></object>';
+}
+
+
+
+		</script>
+
+	</body>
+
+</html>
+

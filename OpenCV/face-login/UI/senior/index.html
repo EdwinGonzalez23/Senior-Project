@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Home</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+        <style>
+
+        </style>
+    </head>
+
+    <body>
+
+        <div class="jumbotron text-center">
+            <h1>Welcome</h1>
+             <div class="spinner-border text-muted"></div>
+                <p>We are currently in the process of setting up logins.
+                <br>If you are a host or a server, please login temporarily.
+                <br>Thank you!</p> 
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <h3>Host</h3>
+                    <div class="btn-group btn-group-lg">
+                        <a href="hostpage.html" class="btn btn-info" role="button">Auto-Login</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <h3>Server</h3>
+                    <div class="btn-group btn-group-lg">
+                        <a href="server.html" class="btn btn-info" role="button">Auto-Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form action="scripts/php/login.php" method="post">
+            <input type="text" name="username" placeholder="Enter username">
+            <input type="password" name="password" placeholder="Enter Password">
+            <input type="submit" value="Submit">
+        </form>
+
+        
+
+    </body>
+</html>

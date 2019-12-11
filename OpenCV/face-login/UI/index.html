@@ -10,7 +10,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
 
-        <link rel="stylesheet" href="styles/camstyle.css">
+        <link rel="stylesheet" href="camstyle.css">
     </head>
 
     <body>
@@ -66,7 +66,7 @@
 
             <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                                                                                     aria-hidden="true">
-                <form action="scripts/php/login.php"" method="post">
+                <form action="scripts/php/login.php" method="post">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header text-center">
@@ -75,23 +75,33 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body mx-3">
-                                <div class="md-form mb-5">
-                                    <i class="fas fa-envelope prefix grey-text"></i>
-                                    <input type="text" id="defaultForm-email" name="username" class="form-control validate">
-                                    <label data-error="wrong" data-success="right" for="defaultForm-email">Username</label>
-                                </div>
 
                                 <div class="md-form mb-4">
                                     <i class="fas fa-lock prefix grey-text"></i>
-                                    <input type="password" id="defaultForm-pass" class="form-control validate">
-                                    <label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>
+                                    <input type="submit" name="username" id="defaultForm-pass1" class="form-control validate" value="name here" >
+                                    <label data-error="wrong" data-success="right" for="defaultForm-pass"></label>
+                                </div>
+                                <div class="md-form mb-4">
+                                    <i class="fas fa-lock prefix grey-text"></i>
+                                    <input type="submit" name="username" id="defaultForm-pass2" class="form-control validate" value="name here" >
+                                    <label data-error="wrong" data-success="right" for="defaultForm-pass"></label>
+                                </div>
+                                <div class="md-form mb-4">
+                                    <i class="fas fa-lock prefix grey-text"></i>
+                                    <input type="submit" name="username" id="defaultForm-pass3" class="form-control validate" value="name here" >
+                                    <label data-error="wrong" data-success="right" for="defaultForm-pass"></label>
+                                </div>
+                                <div class="md-form mb-4">
+                                    
+                                    <button class="btn btn-default">Not you?</button>
                                 </div>
 
                             </div>
+                            
                             <div class="modal-footer d-flex justify-content-center">
                                 <button class="btn btn-default">Login</button>
                             </div>
+                           
                         </div>
                     </div>
             </div>
@@ -100,6 +110,7 @@
                 <br>
                 <br>
                 <script src="scripts/js/camscript.js"></script>
+
                 <script src="scripts/js/getID.js"></script>
     </body>
 </html>

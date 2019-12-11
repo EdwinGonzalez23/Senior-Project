@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <title>SERVER</title>
+    </head>
+    <body>
+        <!-- --------------------------------------------------------------------------------- -->
+        <!-- ----------------------------------------------------------------------------------------- -->
+            <!-- ------------------------------------------------------------------------ -->
+
+            <div class="left">	
+                <br><br>
+                <div class="picture" >
+                    <p>Picture of server</p>
+                </div>
+                <br><p> Display server's info</p>	
+                <div class="btn-group-right">
+                    <button type="button" class="button" onclick="loadAllDiv()" >All</button>
+                    <button type="button" class="button" onclick="loadMeDiv()">Me</button></br></br>
+                </div>
+            </div>
+            <!-- ------------------------------------------------------------------------- -->
+            <div class="content">
+            <div class="col-md-4" >
+                <center><h2>Server</h2></center>
+                <br>
+                <div id="divOutput">
+                    <!--	<div id="content"></div> -->
+                    <div  id="table">
+                        <center><p>Table No.1</p></center>
+                        <button onclick='set_timer()' >START</button>
+                        <button onclick='stop_timer()'>STOP</button>
+                        <label id="minutes">00</label><span class='bigger'>:</span><label id="seconds">00</label>
+                        <p>Greeting: <span id="greeting"></span><br>
+                        Timer: <span id="timer"></span><br>
+                        Party Leader ID: <span id="pid"></span><br>
+                        Party Leader: <span id="pleader"></span></p>
+                    </div><br><br>
+                    <div id="table">
+                        <center><p>Table No.2</p></center>
+                        <button onclick='set_timer()' >START</button>
+                        <button onclick='stop_timer()'>STOP</button>
+                        <label id="minutes">00</label><span class='bigger'>:</span><label id="seconds">00</label>
+                        <p>Greeting: <span id="greeting"></span><br>
+                        Timer: <span id="timer"></span><br>
+                        Party Leader ID: <span id="pid"></span><br>
+                        Party Leader: <span id="pleader"></span></p>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <!-- ------------------------------------------------------------------------ -->
+        <!-- ------------------------------------------------------------------------- -->
+
+        <script type="text/javascript">
+
+///////////////////////////////////////////////////////////////////////////
+
+function pad(val) {
+    valString = val + "";
+    if(valString.length < 2) {
+        return "0" + valString;
+    } else {
+        return valString;
+    }
+}
+
+totalSeconds = 0;
+function setTime(minutesLabel, secondsLabel) {
+    totalSeconds++;
+    secondsLabel.innerHTML = pad(totalSeconds%60);
+    minutesLabel.innerHTML = pad(parseInt(totalSeconds/60));
+}
+
+function set_timer() {
+    minutesLabel = document.getElementById("minutes");
+    secondsLabel = document.getElementById("seconds");
+    my_int = setInterval(function() { setTime(minutesLabel, secondsLabel)}, 1000);
+}
+
+function stop_timer() {
+    clearInterval(my_int);
+}
+/////////////////////////////////////////////////////////////////////////////////////////
+
+function loadAllDiv(){
+    $("#divOutput").load("allTables.html")
+}
+function loadMeDiv(){
+    $("#divOutput").load("meTables.html")
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var data = JSON.parse(this.responseText);
+        document.getElementById("timer").innerHTML = "add timer";
+        document.getElementById("pid").innerHTML = data[0].id;
+        document.getElementById("pleader").innerHTML = data[0].name;
+        console.log("JSON Data:\n");
+        //Check the Console Log (Hit F12)
+        console.log(data);
+        console.log(data[0].id);
+        console.log(data[0].name);
+    }
+};
+xmlhttp.open("GET", "socket.php?q=", true);
+xmlhttp.send();
+
+
+        </script>
+
+    </body>
+</html>

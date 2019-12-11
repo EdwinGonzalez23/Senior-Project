@@ -1,0 +1,2 @@
+[13-Nov-2019 07:33:16 America/Los_Angeles] PHP Warning:  file_put_contents(../../json/table-assign.json): failed to open stream: Permission denied in /home/stu/egonzalez/public_html/senior/senior/scripts/php/addcustomer.php on line 29
+[13-Nov-2019 07:33:49 America/Los_Angeles] PHP Warning:  file_put_contents(../../json/table-assign.json): failed to open stream: Permission denied in /home/stu/egonzalez/public_html/senior/senior/scripts/php/addcustomer.php on line 29

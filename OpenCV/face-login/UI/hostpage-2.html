@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+        <!-- Bootstrap CSS CDN -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <!-- My CSS -->
+        <link rel="stylesheet" href="hoststyle-2.css">
+
+        <!-- Font Awesome JS -->
+        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    </head>
+
+
+    <body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Welcome:  <span id="ename"></span></h3>
+            </span>
+                <strong>BS</strong>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-home"></i>
+                        Host Home
+                    </a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="#party">Party</a>
+                        </li>
+                        <li>
+                            <a href="./hostpage.html">Refresh</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-briefcase"></i>
+                        How to Get Started
+                    </a>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-copy"></i>
+                        Pages
+                    </a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Page 1</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-question"></i>
+                        Help
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-paper-plane"></i>
+                        Contact
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="list-unstyled CTAs">    
+            <p><h5><center><b>Add a party</b></center></h5></p>
+            <form action="scripts/php/addcustomer.php" method="post">
+                <input type="text" class="form-control" name="plname" placeholder="Enter Customer Name">
+                <input type="number" class="form-control" name="plid" placeholder="Enter Customer ID">
+                <input type="text" class="form-control" name="pOrder" placeholder="Enter Party Order">
+                <input type="number" class="form-control" name="pNumGuests" placeholder="How many guests?">
+                <input type="number" class="form-control" name="pTableNum" placeholder="Which Table?">
+                <input type="text" class="form-control" name="pServer" placeholder="Assign a server">
+                <br>
+                <button type="Submit" class="btn btn-primary" onclick="addRow();">Submit</button>
+
+            </form>
+</ul>
+</nav>
+<!-- End of side bar stuff -->
+
+        <div id="content">
+             
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+                        <span>Toggle Sidebar</span>
+                    </button>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
+                <h3>
+                    <button class="btn btn-primary btn-lg float-right" onclick="logout();">Log out</button>
+                </h3>
+                        
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+                <h1><center><b>Host</b></center></h1>
+                <div class="line"></div>
+                <p><small>
+                    <script>
+document.write(Date());
+                    </script>
+                </small>
+                </p>
+
+                <table class="table table-bordered" id="js-table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Party Order</th>
+                            <th>Name</th>
+                            <th>Number of Guests</th>
+                            <th>Assigned Sever</th>
+                            <th>Time Waiting</th>
+                        </tr>
+                    </thead>
+                    <tbody id="js-table-body">
+
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
+        
+    
+    <script src="scripts/js/scripts.js"></script>
+        <script src="scripts/js/host-scripts.js"></script>
+    </body>
+</html>

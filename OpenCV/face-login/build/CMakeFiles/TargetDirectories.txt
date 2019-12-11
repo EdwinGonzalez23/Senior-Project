@@ -1,3 +1,0 @@
-/home/edwin/Documents/c++/face-login/build/CMakeFiles/rebuild_cache.dir
-/home/edwin/Documents/c++/face-login/build/CMakeFiles/demo.dir
-/home/edwin/Documents/c++/face-login/build/CMakeFiles/edit_cache.dir

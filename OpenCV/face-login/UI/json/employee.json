@@ -1,0 +1,20 @@
+[
+    {
+        "id": 0,
+        "name": "jane",
+        "pword": 123,
+        "position": "host"
+    },
+    {
+        "id": 1,
+        "name": "john",
+        "pword": 456,
+        "position": "server"
+    },
+    {
+        "id": 2,
+        "name": "sophia",
+        "pword": 234,
+        "position": "server"
+    }
+]

@@ -1,1 +1,0 @@
-/usr/bin/c++  -fPIC -g  -rdynamic CMakeFiles/demo.dir/readJson.cpp.o  -o demo -ljsoncpp 

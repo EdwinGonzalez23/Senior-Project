@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
     /*
         Socket Loop. Will scan an image etc
     */
-   Json::Reader reader;
+    Json::Reader reader;
     Json::Value obj;
     DataHolder holder;
     vector<int> ids(3,-1); //ids.resize(3);

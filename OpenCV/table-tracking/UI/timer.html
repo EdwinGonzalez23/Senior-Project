@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+    #stopWatch { width: 280px; height: auto; text-align: center; display: block; padding: 5px; margin: 0 auto; } #timer, #fulltime { width: auto; height: auto; padding: 10px; font-weight: bold; font-family: tahoma; display: block; border: 1px solid #eee; text-align: center; box-shadow: 0 0 5px #ccc; background: #fbfbf0; color: darkblue; border-bottom:4px solid darkgrey; } button { cursor: pointer; font-weight: 700; } #fulltime { display:none; font-size:16px; font-weight:bold; }
+    </style>
+  </head>
+  <body>
+
+    <p id="demo">0</p>
+    <button onclick="clock(); document.getElementById('demo').innerHTML='0';">Start counter</button>
+    <button onclick="clearInterval(myTimer);">Stop counter</button>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+    var myTimer;
+    function clock() {
+     myTimer = setInterval(myClock, 1000);
+     var c = 0;
+
+     function myClock() {
+       document.getElementById("demo").innerHTML = ++c;
+       if (c == 100) {
+         clearInterval(myTimer);
+         alert("Reached zero");
+       }
+     }
+   }
+    </script>
+  </body>
+
+</html>

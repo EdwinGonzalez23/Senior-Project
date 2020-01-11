@@ -36,7 +36,7 @@ using namespace Json;
 
 //Function Headers
 void display(Mat image);
-
+void sendRedAlert();
 int main () {
 /*
     VideoCapture capture;
@@ -65,7 +65,7 @@ int main () {
     }
 */
     Mat image;
-    image = imread("images/colors2.png"); // Read the file
+    image = imread("images/colors.png"); // Read the file
     resize(image,image,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
     if( image.empty() )                      // Check for invalid input
     {
@@ -78,13 +78,23 @@ int main () {
 }
 
 void display(Mat image) {
+    /*
     Mat hsv;
     cvtColor(image,hsv,COLOR_BGR2HSV);
     Mat red;
-    inRange(image,Scalar(0,0,0),Scalar(0,0,255), red);
-    imshow("Camera Window", red);
+    inRange(image,Scalar(0,0,30),Scalar(80,80,255), red);
+    */
+    //imshow("Camera Window", hsv);
+
+    //Simulate Red Being Detected
+    bool redDetected = true;
+    if (redDetected)
+        sendRedAlert();
 }
 
+void sendRedAlert() {
+    cout << "RED ALERT! Taking too long!\n" << endl;
+}
 
 
 

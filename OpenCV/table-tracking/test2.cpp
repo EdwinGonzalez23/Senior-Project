@@ -10,14 +10,14 @@ using namespace cv;
 using namespace std;
 
 // Global Variables
-Mat src = imread("images/colors.png");
+Mat src = imread("images/green.png");
 Mat mask;
 Mat hsv;
 HsvColor green("green"), yellow("yellow"), red1("red"), red2("red"), blue("blue");
 RNG rng(12345);
 // Function Headers
 void findColor(Mat image);
-void outline(Mat tmp);
+string outline(Mat tmp);
 
 int main () {
     //inRange(hsv, Scalar(0, 70, 50), Scalar(10, 255, 255), mask1);
@@ -66,32 +66,68 @@ void findColor(Mat image) {
 
     //Check Green
     Mat g,y,r,b;
+    Mat r1,r2;
+    //inRange(hsv, Scalar(145,0,0), Scalar(155,255,255),mask);
 
-    inRange(hsv, Scalar(green.getLow(0),green.getLow(1),green.getLow(2)),Scalar(green.getHigh(0),green.getHigh(1),green.getHigh(2)),mask);
+    inRange(hsv, Scalar(green.getLow(0),green.getLow(1),green.getLow(2)),Scalar(green.getHigh(0),green.getHigh(1),green.getHigh(2)),g);
+    inRange(hsv, Scalar(yellow.getLow(0),yellow.getLow(1),yellow.getLow(2)),Scalar(yellow.getHigh(0),yellow.getHigh(1),yellow.getHigh(2)),y);
+    inRange(hsv, Scalar(red1.getLow(0),red1.getLow(1),red1.getLow(2)),Scalar(red1.getHigh(0),red1.getHigh(1),red1.getHigh(2)),r1);
+    inRange(hsv, Scalar(red2.getLow(0),red2.getLow(1),red2.getLow(2)),Scalar(red2.getHigh(0),red2.getHigh(1),red2.getHigh(2)),r2);
+    inRange(hsv, Scalar(blue.getLow(0),blue.getLow(1),blue.getLow(2)),Scalar(blue.getHigh(0),blue.getHigh(1),blue.getHigh(2)),b);
 
-    resize(mask,mask,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
-    //imshow( "Contours", mask);
-    outline(mask);
+    r = r1 | r2;
+
+    resize(g,g,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
+    resize(b,b,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
+    resize(y,y,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
+    resize(r,r,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
+    
+    imshow( "Contours", y);
+    string colorResult = outline(g);
+    if (colorResult == "none")
+        colorResult = outline(y);
+    if (colorResult == "none")
+        colorResult = outline(b);
+    if (colorResult == "none")
+        colorResult = "none";
+
+    cout << colorResult << endl;
+    // outline(g);
+    // outline(y);
+    // outline(r);
+    // outline(b);
 }
 
-void outline(Mat tmp) {
+string outline(Mat tmp) {
     vector<vector<Point> > contours;
     vector<Vec4i> hierarchy;
     findContours(tmp, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE );
     Mat drawing = Mat::zeros( tmp.size(), CV_8UC3 );
-    for( size_t i = 0; i< contours.size(); i++ )
-    {
-        //cout << contours[i] << endl;
-        Scalar color = Scalar( rng.uniform(0, 256), rng.uniform(0,256), rng.uniform(0,256) );
-        drawContours( drawing, contours, (int)i, color, 2, LINE_8, hierarchy, 0 );
+    if (contours.empty())
+        return "none";
+    else {
+        Point top = contours[0][0];
+        int x = top.x;
+        int y = top.y + 20;
+
+        Mat rgbPixel = src(Rect(x,y,1,1));
+        Mat tmpHsv;
+        cvtColor(rgbPixel, tmpHsv, COLOR_BGR2HSV);
+        Vec3b hsv = tmpHsv.at<Vec3b>(0,0);
+        int hsvPixel = hsv.val[0];
+        // cout << "hsvPixel " << hsvPixel << endl;
+
+        // cout << "c " << c << endl;
+        if (hsvPixel >= green.getLow(0) && hsvPixel <= green.getHigh(0))
+            return green.getColor();
+        else if (hsvPixel >= yellow.getLow(0) && hsvPixel <= yellow.getHigh(0))
+            return yellow.getColor();
+        else if (hsvPixel >= red1.getLow(0) && hsvPixel <= red1.getHigh(0))
+            return red1.getColor();
+        else if (hsvPixel >= red2.getLow(0) && hsvPixel <= red2.getHigh(0))
+            return red2.getColor();
+        else if (hsvPixel >= blue.getLow(0) && hsvPixel <= blue.getHigh(0))
+            return blue.getColor();
+        else return "none";
     }
-    resize(drawing, drawing,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
-    Point top = contours[0][0];
-    int x,y;
-    x = top.x;
-    y = top.y + 20;
-    cout << y << endl;
-    Vec3b colour = src.at<Vec3b>(y,x);
-    cout << "Color " << colour << endl;
-    imshow( "Contours", src);
 }

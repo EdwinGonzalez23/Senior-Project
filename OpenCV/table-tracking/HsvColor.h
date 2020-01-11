@@ -44,5 +44,4 @@ int HsvColor::getHigh(int pos) {
 string HsvColor::getColor() {
     return name;
 }
-
 #endif

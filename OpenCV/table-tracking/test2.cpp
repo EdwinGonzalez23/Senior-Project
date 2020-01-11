@@ -10,14 +10,18 @@ using namespace cv;
 using namespace std;
 
 // Global Variables
-Mat src = imread("images/green.png");
+Mat src;// = imread("images/green.png");
 Mat mask;
 Mat hsv;
 HsvColor green("green"), yellow("yellow"), red1("red"), red2("red"), blue("blue");
 RNG rng(12345);
 // Function Headers
 void findColor(Mat image);
-string outline(Mat tmp);
+void outline(Mat tmp);
+
+void display(Mat frame) {
+    imshow("123", frame);
+}
 
 int main () {
     //inRange(hsv, Scalar(0, 70, 50), Scalar(10, 255, 255), mask1);
@@ -29,8 +33,8 @@ int main () {
     */
 
     // Green
-    green.setLow(36,0,0);
-    green.setHigh(86,255,255);
+    green.setLow(40,75,70);
+    green.setHigh(75,255,255);
 
     // Yellow
     yellow.setLow(20,0,0);
@@ -44,17 +48,43 @@ int main () {
     red2.setHigh(180,255,255);    
 
     // Blue 
-    blue.setLow(100,0,0);
+    blue.setLow(110,100,50);
     blue.setHigh(125,255,255);
 
-    cvtColor(src, hsv, COLOR_BGR2HSV);
-    //Find Yellow
-    //inRange(hsv, Scalar(20, 0, 0), Scalar(35, 255, 255), mask);
     
-    resize(src,src,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
-    //resize(mask,mask,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
+    VideoCapture capture;
+    capture.open(0);
+    if ( ! capture.isOpened() )
+    {
+        cout << "--(!)Error opening video capture\n";
+        return -1;
+    }
+    Mat image;
+    while ( capture.read(src) )
+    {
+        if( src.empty() )
+        {
+            cout << "--(!) No captured image -- Break!\n";
+            break;
+        }
 
-    findColor(src);
+        //resize(image,image,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
+        //display(image); 
+        cvtColor(src, hsv, COLOR_BGR2HSV);
+        //Find Yellow
+        //inRange(hsv, Scalar(20, 0, 0), Scalar(35, 255, 255), mask);
+        
+        resize(src,src,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
+        //resize(mask,mask,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
+        findColor(src);
+        //display(src);
+        if( waitKey(10) == 27 )
+        {
+            break; // escape
+        }
+    }
+
+    //findColor(src);
 
    // imshow( "Contours", mask);
     //waitKey();
@@ -82,52 +112,74 @@ void findColor(Mat image) {
     resize(y,y,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
     resize(r,r,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
     
-    imshow( "Contours", y);
-    string colorResult = outline(g);
-    if (colorResult == "none")
-        colorResult = outline(y);
-    if (colorResult == "none")
-        colorResult = outline(b);
-    if (colorResult == "none")
-        colorResult = "none";
+    imshow( "Blue", b);
+    imshow( "Red", r);
+    imshow( "Yellow", y);
+    imshow( "Green", g);
+   // waitKey();
+    //string colorResult = 
+    //outline(g);
+    // if (colorResult == "none")
+    //     colorResult = outline(y);
+    // if (colorResult == "none")
+    //     colorResult = outline(b);
+    // if (colorResult == "none")
+    //     colorResult = "none";
 
-    cout << colorResult << endl;
-    // outline(g);
-    // outline(y);
-    // outline(r);
-    // outline(b);
+    //cout << colorResult << endl;
+
+    outline(g);
+    outline(y);
+    outline(r);
+    outline(b);
 }
 
-string outline(Mat tmp) {
+void outline(Mat tmp) {
+    //imshow("zzz", tmp);
+    //return "red";
     vector<vector<Point> > contours;
     vector<Vec4i> hierarchy;
     findContours(tmp, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE );
     Mat drawing = Mat::zeros( tmp.size(), CV_8UC3 );
-    if (contours.empty())
-        return "none";
-    else {
+    
+    if (!contours.empty()) {
+        //cout << "Found a color " << endl;
         Point top = contours[0][0];
         int x = top.x;
-        int y = top.y + 20;
+        int y = top.y;
 
         Mat rgbPixel = src(Rect(x,y,1,1));
         Mat tmpHsv;
         cvtColor(rgbPixel, tmpHsv, COLOR_BGR2HSV);
         Vec3b hsv = tmpHsv.at<Vec3b>(0,0);
         int hsvPixel = hsv.val[0];
-        // cout << "hsvPixel " << hsvPixel << endl;
+        //cout << "hsvPixel " << hsv << endl;
 
         // cout << "c " << c << endl;
         if (hsvPixel >= green.getLow(0) && hsvPixel <= green.getHigh(0))
-            return green.getColor();
+            cout << green.getColor() << endl;
         else if (hsvPixel >= yellow.getLow(0) && hsvPixel <= yellow.getHigh(0))
-            return yellow.getColor();
+            cout << yellow.getColor() << endl;
         else if (hsvPixel >= red1.getLow(0) && hsvPixel <= red1.getHigh(0))
-            return red1.getColor();
+            cout << red1.getColor() << endl;
         else if (hsvPixel >= red2.getLow(0) && hsvPixel <= red2.getHigh(0))
-            return red2.getColor();
+            cout << red2.getColor() << endl;
         else if (hsvPixel >= blue.getLow(0) && hsvPixel <= blue.getHigh(0))
-            return blue.getColor();
-        else return "none";
+            cout << blue.getColor() << endl;
+        //else cout <<  "none" << endl;
+
+
+        // cout << "c " << c << endl;
+        // if (hsvPixel >= green.getLow(0) && hsvPixel <= green.getHigh(0))
+        //     return green.getColor();
+        // else if (hsvPixel >= yellow.getLow(0) && hsvPixel <= yellow.getHigh(0))
+        //     return yellow.getColor();
+        // else if (hsvPixel >= red1.getLow(0) && hsvPixel <= red1.getHigh(0))
+        //     return red1.getColor();
+        // else if (hsvPixel >= red2.getLow(0) && hsvPixel <= red2.getHigh(0))
+        //     return red2.getColor();
+        // else if (hsvPixel >= blue.getLow(0) && hsvPixel <= blue.getHigh(0))
+        //     return blue.getColor();
+        // else return "none";
     }
 }

@@ -1,7 +1,9 @@
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
+
 #include <iostream>
+#include <stdlib.h>
 
 //Custom Classes
 #include "HsvColor.h"
@@ -33,8 +35,8 @@ int main () {
     */
 
     // Green
-    green.setLow(40,75,70);
-    green.setHigh(75,255,255);
+    green.setLow(40,70,50);
+    green.setHigh(70,255,255);
 
     // Yellow
     yellow.setLow(20,0,0);
@@ -48,8 +50,10 @@ int main () {
     red2.setHigh(180,255,255);    
 
     // Blue 
-    blue.setLow(110,100,50);
-    blue.setHigh(125,255,255);
+    // blue.setLow(110,100,50);
+    // blue.setHigh(125,255,255);
+    blue.setLow(110,100,0);
+    blue.setHigh(130,255,255);
 
     
     VideoCapture capture;
@@ -111,10 +115,11 @@ void findColor(Mat image) {
     resize(b,b,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
     resize(y,y,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
     resize(r,r,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
-    
-    imshow( "Blue", b);
-    imshow( "Red", r);
-    imshow( "Yellow", y);
+
+    imshow("OG",src); 
+    // imshow( "Blue", b);
+    // imshow( "Red", r);
+    // imshow( "Yellow", y);
     imshow( "Green", g);
    // waitKey();
     //string colorResult = 
@@ -153,19 +158,21 @@ void outline(Mat tmp) {
         cvtColor(rgbPixel, tmpHsv, COLOR_BGR2HSV);
         Vec3b hsv = tmpHsv.at<Vec3b>(0,0);
         int hsvPixel = hsv.val[0];
-        //cout << "hsvPixel " << hsv << endl;
+        cout << "hsvPixel " << hsv << endl;
 
         // cout << "c " << c << endl;
-        if (hsvPixel >= green.getLow(0) && hsvPixel <= green.getHigh(0))
+        if (hsvPixel >= green.getLow(0) && hsvPixel <= green.getHigh(0)) {
             cout << green.getColor() << endl;
-        else if (hsvPixel >= yellow.getLow(0) && hsvPixel <= yellow.getHigh(0))
-            cout << yellow.getColor() << endl;
+            
+        }
         else if (hsvPixel >= red1.getLow(0) && hsvPixel <= red1.getHigh(0))
             cout << red1.getColor() << endl;
         else if (hsvPixel >= red2.getLow(0) && hsvPixel <= red2.getHigh(0))
             cout << red2.getColor() << endl;
         else if (hsvPixel >= blue.getLow(0) && hsvPixel <= blue.getHigh(0))
             cout << blue.getColor() << endl;
+        // else if (hsvPixel >= yellow.getLow(0) && hsvPixel <= yellow.getHigh(0))
+        //     cout << yellow.getColor() << endl;
         //else cout <<  "none" << endl;
 
 

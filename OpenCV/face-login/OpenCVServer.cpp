@@ -151,11 +151,15 @@ int main(int argc, char *argv[])
     // Mat img = imread(image);
     // resize(img,img,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
     // facemark->getFaces(img,faces);
-
+////
 
     //detectAndDisplay(img, faces, facemark, shapes, holder, ids);
     cout << "Workings " << endl;
     int counter = 0;
+     Mat img = imread(image2);
+    resize(img,img,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
+    facemark->getFaces(img,faces);
+    detectAndDisplay(img, faces, facemark, shapes, holder, ids);
     while(newSd = accept(serverSd, (sockaddr *)&newSockAddr, &newSockAddrSize))
     {
         //receive a message from the client (listen)
@@ -194,30 +198,34 @@ int main(int argc, char *argv[])
     Mat frame;
     Mat img;
     yes = -1;
-    while ( capture.read(frame) )
-    {
+    // while ( capture.read(frame) )
+    // {
         
-        if( frame.empty() )
-        {
-            cout << "--(!) No captured frame -- Break!\n";
-            break;
-        }
+    //     if( frame.empty() )
+    //     {
+    //         cout << "--(!) No captured frame -- Break!\n";
+    //         break;
+    //     }
 
-        //-- 3. Apply the classifier to the frame
-    img = frame;
-    resize(img,img,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
+    //     //-- 3. Apply the classifier to the frame
+    // img = frame;
+    // resize(img,img,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
+    // facemark->getFaces(img,faces);
+
+    //    detectAndDisplay(img, faces, facemark, shapes, holder, ids);
+    //    //imshow("dsfsdf", frame);
+
+    //     if (yes == 1)
+    //         break;
+    //     if( waitKey(10) == 27 )
+    //     {
+    //         break; // escape
+    //     }
+    // }
+    img = imread(image2);
+    //resize(img,img,Size(250,250), 0, 0, INTER_LINEAR_EXACT);
     facemark->getFaces(img,faces);
-
-       detectAndDisplay(img, faces, facemark, shapes, holder, ids);
-       //imshow("dsfsdf", frame);
-
-        if (yes == 1)
-            break;
-        if( waitKey(10) == 27 )
-        {
-            break; // escape
-        }
-    }
+    detectAndDisplay(img, faces, facemark, shapes, holder, ids);
         // detectAndDisplay(img, faces, facemark, shapes, holder, ids);
         for (int i = 0; i < ids.size(); i++) {
             cout << " ---->" << ids[i] << " ";
@@ -240,6 +248,7 @@ int main(int argc, char *argv[])
         //} 
         //send the message to client
 //        bytesWritten += send(newSd, hello, strlen(msg), 0);
+
     }
     //we need to close the socket descriptors after we're all done
     gettimeofday(&end1, NULL);
@@ -255,6 +264,7 @@ int main(int argc, char *argv[])
 
 void detectAndDisplay(Mat img, vector<Rect> faces,Ptr<FacemarkKazemi> facemark, vector< vector<Point2f> >& shapes, DataHolder& holder, vector<int>& ids)
 {
+    
     vector<int> tmpLandmarks;
     // Check if faces detected or not
     // Helps in proper exception handling when writing images to the directories.
@@ -280,7 +290,7 @@ void detectAndDisplay(Mat img, vector<Rect> faces,Ptr<FacemarkKazemi> facemark, 
                     cv::line(img,Point(p[0],p[1]),shapes[i][k],(255,0,0),1);
                     Point center(faces[i].x + faces[i].width / 2, faces[i].y + faces[i].height / 2);
                     nump++;
-                    //cout << "at point: " << k << " ";// << static_cast<cv::Point2f>(shapes[i][k]);
+                    //cout << "at point: " << k << " " << static_cast<cv::Point2f>(shapes[i][k]) << endl;
                     Point a(p[0],p[1]);
                     //Point atest(ptest[0],ptest[1]);
                     //Point b(s,6);
@@ -290,15 +300,16 @@ void detectAndDisplay(Mat img, vector<Rect> faces,Ptr<FacemarkKazemi> facemark, 
                     //     cout << "at: " << k << endl;
                     //     overall += 1;
                     // }
-                    //cout << res << endl;
+                    cout << res << endl;
                 }
                 
                     cout << endl;
             }
             //Calculate Camera Normalized Image Data Against Server Image Data
             compareData(holder, tmpLandmarks, ids);
-            //namedWindow("Detected_shape");
-            //imshowimshow("Detected_shape", img);
+            //imshow("yooo",img);
+            // namedWindow("Detected_shape");
+            // imshow("Detected_shape", img);//
             yes = 1;
             waitKey(0);
         }

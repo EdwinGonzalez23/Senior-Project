@@ -72,80 +72,135 @@ void DataHolder::compareData(vector<int> dataPoints, vector<int>& topThree) {
         }
         outerCounter++;
         // cout << "List counter " << outerCounter << endl;
-         cout << "totl hits: " << currentName << " " << totalHits << endl;
-         cout << "Current Min A B C: " << mina << " " << minb << " " << minc << " \n" << endl;
-        
-        if (totalHits >= mina) { //first place
-        //cout << "A section " << currentID << endl;
-            if (mina == totalHits) {
-                if (mina == 0) {
-                mina = totalHits;
-                ida = currentID;
-                a = currentName;
+         cout << "totl hits: " << currentName << " " << currentID << " " << totalHits << endl;
+         cout << "Current Min A B C: " << mina << " " << minb << " " << minc << endl;
+
+        if (totalHits >= mina) {
+            //Check if 1st, 2nd, 3rd taken
+            if (totalHits > mina) {
+                topThree[2] = topThree[1];
+                topThree[1] = topThree[0];
                 topThree[0] = currentID;
-                } else if (mina != 0 && minb == 0) {
-                    minb = totalHits;
-                    idb = currentID;
-                    b = currentName;
-                    topThree[1] = currentID;
-                } else if (mina != 0 && minb != 0 && minc == 0) {
-                    minc = totalHits;
-                    idc = currentID;
-                    c = currentName;
-                    topThree[2] = currentID;
-                }
-            } else if (totalHits > mina) {
-                mina = totalHits;
+                idc = idb;
+                idb = ida;
                 ida = currentID;
+                c = b;
+                b = a;
                 a = currentName;
-                topThree[0] = currentID;
-            }
-             
-        } else if (totalHits < mina && totalHits >= minb) { //2nd place
-        cout << "B section " << currentID << endl;
-            if (totalHits == minb) {
-                if (b.empty()) {
-                minb = totalHits;
-                idb = currentID;
-                b = currentName;
+                minc = minb;
+                minb = mina;
+                mina = totalHits;
+            } else {
+                topThree[2] = topThree[1];
                 topThree[1] = currentID;
-                } else if (minb != 0 && minc == 0) {
-                    minc = totalHits;
-                    idc = currentID;
-                    c = currentName;
-                    topThree[2] = currentID;
-                }
-            } else if (totalHits > minb) {
-                minb = totalHits;
+                idc = idb;
                 idb = currentID;
+                c = b;
                 b = currentName;
-                topThree[1] = currentID;
+                minc = minb;
+                minb = totalHits; 
             }
-            
-        } else if (totalHits < minb && totalHits > minc) {
-            cout << "A section " << currentID << endl;
-            minc = totalHits;
+        } else if (totalHits < mina && totalHits >= minb) {
+            //Check if 2nd, 3rd Taken
+            if (totalHits > minb) {
+                topThree[2] = topThree[1];
+                topThree[1] = currentID;
+                idc = idb;
+                idb = currentID;
+                c = b;
+                b = currentName;
+                minc = minb;
+                minb = totalHits;
+             } else {
+                topThree[2] = currentID;
+                idc = currentID;
+                c = currentName;
+                minc = totalHits;
+             }
+        } else if (totalHits > minc) {
+            topThree[2] = currentID;
             idc = currentID;
             c = currentName;
-            topThree[2] = currentID;
-            // if (totalHits == minc) {
+            minc = totalHits;
+        } else cout << "No matches" << endl; 
 
-            // }
-            // if (c.empty()) {
-            //     minc = totalHits;
-            //     idc = currentID;
-            //     c = currentName;
-            //     topThree[2] = currentID;
-            // }
-        } else {
-            cout << "Nothing " << endl;
-        }
-        
-        
+        cout << "New Min A B C: " << mina << " " << minb << " " << minc << " \n" << endl;
     }
-    cout << "\n\nTop Person: " << a << endl;
-    cout << "Second Person: " << b << endl;
-    cout << "Third Person: " << c << endl;
+     cout << "\n\nTop Person: " << a << endl;
+        cout << "Second Person: " << b << endl;
+        cout << "Third Person: " << c << endl;
+        cout << "yiisz" << endl;
+        // if (totalHits >= mina) { //first place
+        // cout << "A section " << currentID << endl;
+        //     if (mina == totalHits) {
+        //         if (mina == 0) {
+        //             cout << "HERE" << endl;
+        //         mina = totalHits;
+        //         ida = currentID;
+        //         a = currentName;
+        //         topThree[1] = topThree[0];
+        //         topThree[0] = currentID;
+        //         } else if (mina != 0 && minb == 0) {
+        //             minb = totalHits;
+        //             idb = currentID;
+        //             b = currentName;
+        //             topThree[2] = topThree[1];
+        //             topThree[1] = currentID;
+        //         } else if (mina != 0 && minb != 0 && minc == 0) {
+        //             minc = totalHits;
+        //             idc = currentID;
+        //             c = currentName;
+        //             topThree[2] = currentID;
+        //         }
+        //     } else if (totalHits > mina) {
+        //         mina = totalHits;
+        //         ida = currentID;
+        //         a = currentName;
+        //         topThree[2] = topThree[1];
+        //         topThree[1] = topThree[0];
+        //         topThree[0] = currentID;
+        //     }
+             
+        // } else if (totalHits < mina && totalHits >= minb) { //2nd place
+        // cout << "B section " << currentID << endl;
+        //     if (totalHits == minb) {
+        //         if (b.empty()) {
+        //         minb = totalHits;
+        //         idb = currentID;
+        //         b = currentName;
+        //         topThree[2] = topThree[1];
+        //         topThree[1] = currentID;
+        //         } else if (minb != 0 && minc == 0) {
+        //             minc = totalHits;
+        //             idc = currentID;
+        //             c = currentName;
+        //             topThree[2] = currentID;
+        //         }
+        //     } else if (totalHits > minb) {
+        //         minb = totalHits;
+        //         idb = currentID;
+        //         b = currentName;
+        //         topThree[1] = currentID;
+        //     }
+            
+        // } else if (totalHits < minb && totalHits > minc) {
+        //     cout << "A section " << currentID << endl;
+        //     minc = totalHits;
+        //     idc = currentID;
+        //     c = currentName;
+        //     topThree[2] = currentID;
+        //     // if (totalHits == minc) {
+
+        //     // }
+        //     // if (c.empty()) {
+        //     //     minc = totalHits;
+        //     //     idc = currentID;
+        //     //     c = currentName;
+        //     //     topThree[2] = currentID;
+        //     // }
+        // } else {
+        //     cout << "Nothing " << endl;
+        // }
 }
 
 #endif

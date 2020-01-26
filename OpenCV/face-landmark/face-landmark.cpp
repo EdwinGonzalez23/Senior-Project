@@ -45,23 +45,23 @@ int main(int argc,char** argv){
     }
     //string filename(parser.get<string>("model_filename"));
     //string filename("model_filename");
-    string filename = "face_landmark_model.dat";
+    string filename = "resources/face_landmark_model.dat";
     if (filename.empty()){
         parser.printMessage();
         cerr << "The name  of  the model file to be loaded for detecting landmarks is not found" << endl;
         return -1;
     }
     //string image(parser.get<string>("image"));
-    string image = "me2.jpg";
+    string image = "me1.jpg";
     //string image2 = "test.jpeg";
-    string image2 = "me3.jpg";
+    string image2 = "me2.jpg";
     if (image.empty()){
         parser.printMessage();
         cerr << "The name  of  the image file in which landmarks have to be detected is not found" << endl;
         return -1;
     }
     //string cascade_name(parser.get<string>("face_cascade"));
-    string cascade_name = "haarcascade_frontalface_default.xml";
+    string cascade_name = "resources/haarcascade_frontalface_default.xml";
     if (cascade_name.empty()){
         parser.printMessage();
         cerr << "The name of the cascade classifier to be loaded to detect faces is not found" << endl;
@@ -84,8 +84,10 @@ int main(int argc,char** argv){
     cout<<"Loaded model"<<endl;
     vector<Rect> faces;
     vector<Rect> facestest;
+    cout << "Herez" << endl;
     resize(img,img,Size(300,300), 0, 0, INTER_LINEAR_EXACT);
     resize(img2,img2,Size(300,300), 0, 0, INTER_LINEAR_EXACT);
+    cout << "Here" << endl;
     facemark->getFaces(img,faces);
     facemarktest->getFaces(img2,facestest);
     vector< vector<Point2f> > shapes;

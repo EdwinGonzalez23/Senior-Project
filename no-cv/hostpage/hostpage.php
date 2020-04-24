@@ -167,8 +167,13 @@
 
                         <form action="../db_scripts/seat_party.php">
                             <input type="number" class="form-control" name="oid" placeholder="Order ID">
-                            <input type="text" class="form-control" name="serverAssigned" placeholder="Server Assigned"
-                                required>
+                            <!-- <input type="text" class="form-control" name="serverAssigned" placeholder="Server Assigned"
+                                required> -->
+                            <select name="serverAssigned" class="custom-select mr-sm-2">
+                                <option>Choose Sever</option>
+                                <option value="1">Benjamin</option>
+                                <option value="2">Edwin</option>
+                            </select>
                             <input type="number" class="form-control" name="tableNumber"
                                 placeholder="Enter Table Number" required>
                             <br>
@@ -217,7 +222,7 @@
                 </div>
             </div>
         </div>
-        
+
 
         <!-- End of Modal -->
 

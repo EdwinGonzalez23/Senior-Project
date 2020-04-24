@@ -199,6 +199,7 @@ document.write(Date());
                             </thead>
                             <body>
                             <tr><td>Server</td><td><?php echo $serverName[0] . " " .$serverName[1];?></td></tr>
+                            <tr><td>Party Name: </td><td><?php echo $row[1];?></td></tr>
                                 <tr><td>Number of guest</td><td><?php echo $row[2];?></td></tr>
                                 <tr><td>Longest Time Waiting</td><td><?php echo $LongestWaitTIme ?></td></tr>
                                 <!--<tr><td>Timer</td><td><button id="startButton">Start</button></td></tr>-->

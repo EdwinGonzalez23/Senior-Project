@@ -171,8 +171,8 @@
                                 required> -->
                             <select name="serverAssigned" class="custom-select mr-sm-2">
                                 <option>Choose Sever</option>
-                                <option value="1">Benjamin</option>
                                 <option value="2">Edwin</option>
+			    	<option value="4">Victor</option>
                             </select>
                             <input type="number" class="form-control" name="tableNumber"
                                 placeholder="Enter Table Number" required>

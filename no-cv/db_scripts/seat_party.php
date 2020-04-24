@@ -6,7 +6,7 @@ if (!$dbconn) {
 }
 
 $oid = intval($_GET['oid']);
-$sid = intval($_GET['serverAssigned']);
+$sid = ($_GET['serverAssigned']);
 $tid = intval($_GET['tableNumber']);
 
 $result = pg_query($dbconn, "SELECT seat_party($oid, $sid, $tid)");

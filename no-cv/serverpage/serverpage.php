@@ -23,12 +23,12 @@ $lwt = pg_fetch_row($result);
 $result = pg_query($dbconn, $table1);
 $row = pg_fetch_array($result);
 
-if ($row[13] > $lwt[0]) {
-    $LongestWaitTIme = $row[13];
-    $CurrentWaitTime = $row[13];
+if ($row[14] > $lwt[0]) {
+    $LongestWaitTIme = $row[14];
+    $CurrentWaitTime = $row[14];
 } else {
     $LongestWaitTIme = $lwt[0];
-    $CurrentWaitTime = $row[13];
+    $CurrentWaitTime = $row[14];
 
 }
 

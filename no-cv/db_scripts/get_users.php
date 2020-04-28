@@ -6,7 +6,7 @@ if (!$dbconn) {
 }
 $jsonTopThree = array();
 // Pretend IDs 1,2,4 have been returned from OPENCV
-$possibleUsers = array (1,2,4);
+$possibleUsers = array (1,3,4);
 
 $topOneQuery = pg_query($dbconn, "SELECT * FROM humans WHERE humanid = $possibleUsers[0]");
 $topOne = pg_fetch_array($topOneQuery);

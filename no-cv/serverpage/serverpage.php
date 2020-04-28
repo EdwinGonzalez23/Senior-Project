@@ -2,14 +2,16 @@
 session_start();
 include("info.php"); 
 include("../db_connect.php"); 
+$humanid = $_SESSION['id'];;
+$conn = $dbconn;
 
 $LongestWaitTIme;
 $CurrentWaitTime;
 // Grab all data from database
-$serverNameQuery = "SELECT DISTINCT firstname, lastname FROM current_orders NATURAL JOIN humans WHERE serverid = humanid AND tableid = 1";
+$serverNameQuery = "SELECT DISTINCT firstname, lastname FROM current_orders NATURAL JOIN humans WHERE serverid = $humanid AND tableid = 1";
 //$table1= "SELECT * FROM current_orders WHERE tableid = 1 ORDER BY starttime DESC";
-$table1 = "SELECT *, (now()::time - starttime) AS current_wait_time FROM current_orders WHERE tableid = 1 ORDER BY starttime DESC";
-$longestWaitTime = "SELECT max(longest_wait_time) FROM current_orders WHERE tableid = 1";
+$table1 = "SELECT *, (now()::time - starttime) AS current_wait_time FROM current_orders WHERE serverid = $humanid AND tableid = 1 ORDER BY starttime DESC";
+$longestWaitTime = "SELECT max(longest_wait_time) FROM current_orders WHERE serverid = $humanid AND tableid = 1";
 
 // Find Server
 $result = pg_query($dbconn, $serverNameQuery);
@@ -33,11 +35,73 @@ if ($row[14] > $lwt[0]) {
 }
 
 $lh; $lm; $ls;
-$ch; $cm; $s;
+$ch1; $cm1; $s1;
+$ch2; $cm2; $s2;
+$ch3; $cm3; $s3;
+$ch4; $cm4; $s4;
 
 list($lh, $lm, $ls)=preg_split('[:]',$LongestWaitTIme); // Longest Record Time
 list($ch, $cm, $cs)=preg_split('[:]',$CurrentWaitTime);// Current Time (may be longest but not recroded)
 
+
+$Tables = array (
+    array(),
+    array(),
+    array(),
+    array()
+);
+
+function GetServername() {
+    
+}
+
+GetTableInfo(1, $dbconn, $Tables, $humanid);
+GetTableInfo(2, $dbconn, $Tables, $humanid);
+GetTableInfo(3, $dbconn, $Tables, $humanid);
+GetTableInfo(4, $dbconn, $Tables, $humanid);
+
+function GetTableInfo($TableNum, $dbconn, &$Tables, $humanid) {
+    $serverNameQuery = "SELECT DISTINCT firstname, lastname FROM current_orders NATURAL JOIN humans WHERE humanid = $humanid AND tableid = $TableNum";
+    $table1 = "SELECT *, (now()::time - starttime) AS current_wait_time FROM current_orders WHERE serverid = $humanid AND tableid = $TableNum ORDER BY starttime DESC";
+    $longestWaitTime = "SELECT max(longest_wait_time) FROM current_orders WHERE serverid = $humanid AND tableid = $TableNum";
+
+    // Find Server
+    $result = pg_query($dbconn, $serverNameQuery);
+    $serverName = pg_fetch_row($result);
+    $Tables[$TableNum-1][0] = $serverName;
+
+    // Find LWT
+    $result = pg_query($dbconn, $longestWaitTime);
+    $lwt = pg_fetch_row($result);
+    
+    //Find Num Guest, LWT, CWT
+    $result = pg_query($dbconn, $table1);
+    $row = pg_fetch_array($result);
+
+    $Tables[$TableNum-1][1] = $row[1]; 
+    $Tables[$TableNum-1][2] = $row[2]; 
+
+    if ($row[14] > $lwt[0]) {
+        // $LongestWaitTIme = $row[14];
+        // $CurrentWaitTime = $row[14];
+        $Tables[$TableNum-1][3] = $row[14]; 
+        $Tables[$TableNum-1][4] = $row[14]; 
+    } else {
+        // $LongestWaitTIme = $lwt[0];
+        // $CurrentWaitTime = $row[14];
+        $Tables[$TableNum-1][3] = $lwt[0]; 
+        $Tables[$TableNum-1][4] = $row[14];
+    
+    }
+    //cs cm
+    // $lh = 0; $lm = 0; $ls = 0;
+    // $ch = 0; $cm = 0; $cs = 0;
+
+    list($lh, $lm, $ls)=preg_split('[:]',$Tables[$TableNum-1][3]); // Longest Record Time
+    list($ch, $cm, $cs)=preg_split('[:]',$Tables[$TableNum-1][4]);// Current Time (may be longest but not recroded)
+    $Tables[$TableNum-1][5] = $cm;
+    $Tables[$TableNum-1][6] = $cs;
+}
 ?>
 <!DOCTYPE html>
 <!-- serverpage.php -->
@@ -198,12 +262,12 @@ document.write(Date());
                                 </tr>
                             </thead>
                             <body>
-                            <tr><td>Server</td><td><?php echo $serverName[0] . " " .$serverName[1];?></td></tr>
-                            <tr><td>Party Name: </td><td><?php echo $row[1];?></td></tr>
-                                <tr><td>Number of guest</td><td><?php echo $row[2];?></td></tr>
-                                <tr><td>Longest Time Waiting</td><td><?php echo $LongestWaitTIme ?></td></tr>
+                            <tr><td>Server</td><td><?php echo $Tables[0][0][0] . " " . $Tables[0][0][1];?></td></tr>
+                            <tr><td>Party Name: </td><td><?php echo $Tables[0][1];?></td></tr>
+                                <tr><td>Number of guest</td><td><?php echo $Tables[0][2];?></td></tr>
+                                <tr><td>Longest Time Waiting</td><td><?php echo $Tables[0][3]; ?></td></tr>
                                 <!--<tr><td>Timer</td><td><button id="startButton">Start</button></td></tr>-->
-                                <tr><td>Time Waiting</td><td id="stopWatch"></td></tr>
+                                <tr><td>Time Waiting</td><td id="stopWatchs1"></td></tr>
                                 <tr><td></td><td></td></tr>
                             </body>
                             </table><br><br><br> 
@@ -211,16 +275,17 @@ document.write(Date());
                             <thead >
                                 <tr>
                                     <th>TABLE 2</th>
-                                    <td></td>
+                                    <td id="warning-t2-header"></td>
                                 </tr>
                             </thead>
                             <body>
-                                <tr><td>Name</td><td>Janet</td></tr>
-                                <tr><td>Number of guest</td><td>03</td></tr>
-                                <tr><td>Longest Time</td><td><?php echo $timer; ?></td></tr>
-                                <tr><td>Timer</td><td><button id="startButton2">Start</button></td></tr>
-                                <tr><td>Time Waiting</td><td id="stopWatch2">0</td></tr>
-                                <tr><td></td><td><button id="resetButton2">Reset</button></td></tr>
+                                <tr><td>Name</td><td><?php echo $Tables[1][0][0] . " " . $Tables[1][0][1];?></td></tr>
+                                <tr><td>Party Name: </td><td><?php echo $Tables[1][1];?></td></tr>
+                                <tr><td>Number of guest</td><td><?php echo $Tables[1][2];?></td></tr>
+                                <tr><td>Longest Time Waiting</td><td><?php echo $Tables[1][3]; ?></td></tr>
+                                <!-- <tr><td>Timer</td><td><button id="startButton2">Start</button></td></tr> -->
+                                <tr><td>Time Waiting</td><td id="stopWatch2s">0</td></tr>
+                                <!-- <tr><td></td><td><button id="resetButton2">Reset</button></td></tr> -->
                             </body>
                         </table><br>
                     </div>
@@ -229,32 +294,34 @@ document.write(Date());
                             <thead >
                                 <tr >
                                     <th>TABLE 3</th>
-                                    <td></td>
+                                    <td id="warning-t3-header"></td>
                                 </tr>
                             </thead>
                             <body>
-                                <tr><td>Name</td><td>Janet</td></tr>
-                                <tr><td>Number of guest</td><td>05</td></tr>
-                                <tr><td>Longest Time</td><td><?php echo $timer; ?></td></tr>
-                                <tr><td>Timer</td><td><button id="startButton3">Start</button></td></tr>
-                                <tr><td>Time Waiting</td><td id="stopWatch3">0</td></tr>
-                                <tr><td></td><td><button id="resetButton3">Reset</button></td></tr>
+                                <tr><td>Name</td><td><?php echo $Tables[2][0][0] . " " . $Tables[2][0][1];?></td></tr>
+                                <tr><td>Party Name: </td><td><?php echo $Tables[2][1];?></td></tr>
+                                <tr><td>Number of guest</td><td><?php echo $Tables[2][2];?></td></tr>
+                                <tr><td>Longest Time Waiting</td><td><?php echo $Tables[2][3]; ?></td></tr>
+                                <!-- <tr><td>Timer</td><td><button id="startButton2">Start</button></td></tr> -->
+                                <tr><td>Time Waiting</td><td id="stopWatch3s">0</td></tr>
+                                <!-- <tr><td></td><td><button id="resetButton2">Reset</button></td></tr> -->
                             </body>
                         </table><br>
                         <table id="bgDiv4">
                             <thead >
                                 <tr>
                                     <th>TABLE 4</th>
-                                    <td></td>
+                                    <td id="warning-t4-header"></td>
                                 </tr>
                             </thead>
                             <body>
-                                <tr><td>Name</td><td>Janet</td></tr>
-                                <tr><td>Number of guest</td><td>07</td></tr>
-                                <tr><td>Longest Time</td><td><?php echo $timer; ?></td></tr>
-                                <tr><td>Timer</td><td><button id="startButton4">Start</button></td></tr>
-                                <tr><td>Time Waiting</td><td id="stopWatch4">0</td></tr>
-                                <tr><td></td><td><button id="resetButton4">Reset</button></td></tr>
+                            <tr><td>Name</td><td><?php echo $Tables[3][0][0] . " " . $Tables[3][0][1];?></td></tr>
+                                <tr><td>Party Name: </td><td><?php echo $Tables[3][1];?></td></tr>
+                                <tr><td>Number of guest</td><td><?php echo $Tables[3][2];?></td></tr>
+                                <tr><td>Longest Time Waiting</td><td><?php echo $Tables[3][3]; ?></td></tr>
+                                <!-- <tr><td>Timer</td><td><button id="startButton2">Start</button></td></tr> -->
+                                <tr><td>Time Waiting</td><td id="stopWatch4s">0</td></tr>
+                                <!-- <tr><td></td><td><button id="resetButton2">Reset</button></td></tr> -->
                             </body>
                         </table>
                     </div>
@@ -335,19 +402,110 @@ window.onclick = function(event) {
             <!-- Victor original server javascript in the following script -->
             <script type="text/javascript">
 //table 1
-var x = "<?php echo $cs?>";
-var x2 = "<?php echo $cm?>";
-if (x == 0 && x2 == 0) {
-    $('#warning-t-header').html("Unassigned")
-} else {
+var x = "<?php echo $Tables[0][6]?>";
+var x2 = "<?php echo $Tables[0][5]?>";
+console.log(x)
+console.log(x2)
+var ts2 = "<?php echo $Tables[1][6]?>";
+var tm2 = "<?php echo $Tables[1][5]?>";
+console.log(ts2)
+console.log(tm2)
+var ts3 = "<?php echo $Tables[2][6]?>";
+var tm3 = "<?php echo $Tables[2][5]?>";
+console.log(ts3)
+console.log(tm3)
+var ts4 = "<?php echo $Tables[3][6]?>";
+var tm4 = "<?php echo $Tables[3][5]?>";
+console.log(ts4)
+console.log(tm4)
+
     window.onload = (function (e) {
         setInterval(function () {
-                    $("#stopWatch").html(""+ x2 +" : "+x);
-                    x++;
-                    if(x >=60){x=0; x2++;}
-                                }, 1000);
-});
-}
+            if (x == 0 && x2 == 0) { 
+                $('#warning-t-header').html("Unassigned")
+            } else {
+                $("#stopWatchs1").html(""+ x2 +" : "+x);
+                x++;
+            }
+            if (tm2 == 0 && ts2 == 0) { 
+                $('#warning-t2-header').html("Unassigned")
+            } else {
+                $("#stopWatch2s").html(""+ tm2 +" : "+ts2);
+                ts2++;
+            }
+            if (tm3 == 0 && ts3 == 0) { 
+                $('#warning-t3-header').html("Unassigned")
+            } else {
+                $("#stopWatch3s").html(""+ tm3 +" : "+ts3);
+                ts3++;
+            }
+            if (tm4 == 0 && ts4 == 0) {
+                $('#warning-t4-header').html("Unassigned")
+            } else {
+                $("#stopWatch4s").html(""+ tm4 +" : "+ts4);
+                ts4++;
+            }
+            if(x >=60)
+            {
+                x=0; x2++;
+            }
+            if(ts2 >=60)
+            {
+                ts2=0; tm2++;
+            }
+            if(ts3 >=60)
+            {
+                ts3=0; tm3++;
+            }
+            if(ts4 >=60)
+            {
+                ts4=0; tm4++;
+            }
+        }, 1000);
+    });
+
+// if (ts2 == 0 && tm2 == 0) {
+//     $('#warning-t2-header').html("Unassigned")
+// } else {
+//     window.onload = (function (e) {
+//         setInterval(function () {
+//             $("#stopWatch2s").html(""+ tm2 +" : "+ts2);
+//             ts2++;
+//             if(ts2 >=60)
+//             {
+//                 ts2=0; tm2++;
+//             }
+//         }, 1000);
+//     });
+// }
+// if (ts3 == 0 && tm3 == 0) {
+//     $('#warning-t3-header').html("Unassigned")
+// } else {
+//     window.onload = (function (e) {
+//         setInterval(function () {
+//             $("#stopWatch3s").html(""+ tm3 +" : "+ts3);
+//             ts3++;
+//             if(ts3 >=60)
+//             {
+//                 ts3=0; tm3++;
+//             }
+//         }, 1000);
+//     });
+// }
+// if (ts4 == 0 && tm4 == 0) {
+//     $('#warning-t4-header').html("Unassigned")
+// } else {
+//     window.onload = (function (e) {
+//         setInterval(function () {
+//             $("#stopWatchs4").html(""+ tm4 +" : "+ts4);
+//             ts4++;
+//             if(ts4 >=60)
+//             {
+//                 ts4=0; tm4++;
+//             }
+//         }, 1000);
+//     });
+// }
 
 
 setInterval(function () {

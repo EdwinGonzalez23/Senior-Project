@@ -81,6 +81,7 @@
 
                     <form id="login-form" action="php_scripts/login.php" method="post">
                         <input type="hidden" name="pos" id="hidden-id1" value="pos">
+                        <input type="hidden" name="id" id="hidden-ids1" value="id">
                         <input type="submit" name="username" id="defaultForm-pass1" class="form-control validate"
                             value="name here">
                         <label data-error="wrong" data-success="right" for="defaultForm-pass"></label>
@@ -92,6 +93,7 @@
                     
                     <form id="login-form" action="php_scripts/login.php" method="post">
                     <input type="hidden" name="pos" id="hidden-id2" value="pos">
+                    <input type="hidden" name="id" id="hidden-ids2" value="id">
                     <input type="submit" name="username" id="defaultForm-pass2" class="form-control validate"
                         value="name here">
                     <label data-error="wrong" data-success="right" for="defaultForm-pass"></label>
@@ -103,6 +105,7 @@
 
                     <form id="login-form" action="php_scripts/login.php" method="post">
                     <input type="hidden" name="pos" id="hidden-id3" value="pos">
+                    <input type="hidden" name="id" id="hidden-ids3" value="id">
                     <input type="submit" name="username" id="defaultForm-pass3" class="form-control validate"
                         value="name here">
                     <label data-error="wrong" data-success="right" for="defaultForm-pass"></label>

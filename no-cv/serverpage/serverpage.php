@@ -510,12 +510,33 @@ console.log(tm4)
 
 setInterval(function () {
     var bgColor = $("#bgDiv").css("background-color");
-     if (x2 < 5)
+     if (x2 < 3)
         $("#bgDiv").css("background-color", "#32CD32")
-    else if(x2 < 10 )
+    else if(x2 < 5 )
         $("#bgDiv").css("background-color", "Yellow")
     else 
         $("#bgDiv").css("background-color", "Red")
+
+        if (ts2 < 3)
+        $("#bgDiv2").css("background-color", "#32CD32")
+    else if(ts2 < 5 )
+        $("#bgDiv2").css("background-color", "Yellow")
+    else 
+        $("#bgDiv2").css("background-color", "Red")
+
+        if (ts3 < 3)
+        $("#bgDiv3").css("background-color", "#32CD32")
+    else if(ts3 < 5 )
+        $("#bgDiv3").css("background-color", "Yellow")
+    else 
+        $("#bgDiv3").css("background-color", "Red")
+
+        if (ts4 < 3)
+        $("#bgDiv4").css("background-color", "#32CD32")
+    else if(ts4 < 5 )
+        $("#bgDiv4").css("background-color", "Yellow")
+    else 
+        $("#bgDiv4").css("background-color", "Red")
 }, 1000);
 
 

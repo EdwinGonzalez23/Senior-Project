@@ -1,5 +1,5 @@
 <?php
-include('db_connect.php');
+include('../db_connect.php');
 $waitlist = pg_query($dbconn, "Select * FROM Waitlist") or die('Query failed: ' . pg_last_error());
 $activelist = pg_query($dbconn, "Select * FROM ActiveList") or die('Query failed: ' . pg_last_error());
 $temp1 = pg_query($dbconn, "Select * FROM todays_checkin") or die('Query failed: ' . pg_last_error());

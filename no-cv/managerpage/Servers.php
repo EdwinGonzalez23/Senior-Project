@@ -1,5 +1,5 @@
 <?php
-include('db_connect.php');
+include('../db_connect.php');
 $result = pg_query($dbconn, "Select * FROM server_stats") or die('Query failed: ' . pg_last_error());
 ?>
 <!DOCTYPE html>

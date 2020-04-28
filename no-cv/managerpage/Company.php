@@ -1,16 +1,26 @@
 <?php
-include('db_connect.php');
+include('../db_connect.php');
 $waitlist = pg_query($dbconn, "Select * FROM Waitlist") or die('Query failed: ' . pg_last_error());
 $activelist = pg_query($dbconn, "Select * FROM ActiveList") or die('Query failed: ' . pg_last_error());
-$temp1 = pg_query($dbconn, "Select * FROM todays_checkin") or die('Query failed: ' . pg_last_error());
-$temp2 = pg_query($dbconn, "Select * FROM todays_experience") or die('Query failed: ' . pg_last_error());
-$temp3 = pg_query($dbconn, "Select * FROM todays_wait") or die('Query failed: ' . pg_last_error());
-$temp4 = pg_query($dbconn, "Select * FROM todays_meal") or die('Query failed: ' . pg_last_error());
+$temp1 = pg_query($dbconn, "Select * FROM all_checkin") or die('Query failed: ' . pg_last_error());
+$temp2 = pg_query($dbconn, "Select * FROM all_experience") or die('Query failed: ' . pg_last_error());
+$temp3 = pg_query($dbconn, "Select * FROM all_wait") or die('Query failed: ' . pg_last_error());
+$temp4 = pg_query($dbconn, "Select * FROM all_meal") or die('Query failed: ' . pg_last_error());
 
 $checkin = pg_fetch_array($temp1, null, PGSQL_ASSOC);
 $experience = pg_fetch_array($temp2, null, PGSQL_ASSOC);
 $waits = pg_fetch_array($temp3, null, PGSQL_ASSOC);
 $meals = pg_fetch_array($temp4, null, PGSQL_ASSOC);
+
+$result = pg_query($dbconn, "Select * FROM date_vs_time") or die('Query failed: ' . pg_last_error());
+$array = pg_fetch_all($result);
+$dataPoints = array();
+if ($array) {
+    foreach ($array as $arr) {
+        $tmp = array('label' => $arr['date'], 'y' => $arr['wait']);
+        $dataPoints[] = $tmp;
+    }
+} 
 ?>
 <!DOCTYPE html>
 <!--
@@ -68,7 +78,7 @@ $meals = pg_fetch_array($temp4, null, PGSQL_ASSOC);
       </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
-	<button class="btn btn-dark btn-lg float-right" onclick="logout();">Log out</button>
+      <button class="btn btn-dark btn-lg float-right" onclick="logout();">Log out</button>
     </ul>
   </header>
   <div class="app-body">
@@ -98,8 +108,9 @@ $meals = pg_fetch_array($temp4, null, PGSQL_ASSOC);
     </div>
     <main class="main">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active"><h3>Today's Statistics</h3></li>
+        <li class="breadcrumb-item active">Company</li>
         <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-item active">All Time Statistics</li>
       </ol>
       <div class="container-fluid">
         <div class="animated fadeIn">
@@ -121,7 +132,7 @@ $meals = pg_fetch_array($temp4, null, PGSQL_ASSOC);
                     }
                     ?>
                   </div>
-                  <div>Total Customers Check-In</div>
+                  <div>Customers Checked-In</div>
                 </div>
                 <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
                   <canvas class="chart" id="card-chart1" height="70"></canvas>
@@ -133,11 +144,11 @@ $meals = pg_fetch_array($temp4, null, PGSQL_ASSOC);
               <div class="card text-white bg-info">
                 <div class="card-body pb-0">
                   <div class="text-value">
-                  <?php
+                    <?php
                     foreach ($experience as $col_value) {
                       echo "$col_value";
                     }
-                    ?>  
+                    ?>
                   </div>
                   <div>Overall Experience Rating&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div>
                 </div>
@@ -158,11 +169,11 @@ $meals = pg_fetch_array($temp4, null, PGSQL_ASSOC);
                     </div>
                   </div>
                   <div class="text-value">
-                  <?php
+                    <?php
                     foreach ($waits as $col_value) {
                       echo "$col_value";
                     }
-                    ?>  
+                    ?>
                   </div>
                   <div>Average Wait Time&nbsp;&nbsp;</div>
                 </div>
@@ -183,12 +194,13 @@ $meals = pg_fetch_array($temp4, null, PGSQL_ASSOC);
                     </div>
                   </div>
                   <div class="text-value">
-                  <?php
+                    <?php
                     foreach ($meals as $col_value) {
                       echo "$col_value";
                     }
-                    ?>  
-                  </div>                  <div>&nbsp;Average Meal Time&nbsp;</div>
+                    ?>
+                  </div>
+                  <div>&nbsp;Average Meal Time&nbsp;</div>
                 </div>
                 <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
                   <canvas class="chart" id="card-chart4" height="70"></canvas>
@@ -204,72 +216,37 @@ $meals = pg_fetch_array($temp4, null, PGSQL_ASSOC);
       </div>
       <!-- Breadcrumb-->
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active">Current Waitlist</li>
+        <li class="breadcrumb-item active">Wait vs Time Graph</li>
         <!-- Breadcrumb Menu-->
       </ol>
       <div class="container-fluid">
-        <table class="table table-bordered" id="js-table">
-          <thead class="thead-light">
-            <tr>
-              <th>Order</th>
-              <th>Leader</th>
-              <th>Size</th>
-              <th>Check-In Time</th>
-              <th>Wait Time</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-            $i = 0;
-            while ($line = pg_fetch_array($waitlist, null, PGSQL_ASSOC)) {
-              foreach ($line as $col_value) {
-                echo "<td>$col_value</td>";
-                $i++;
-                if ($i > 4) {
-                  echo "</tr>";
-                  echo "<tr>";
-                  $i = 0;
-                }
-              }
+        <div class="card-body">
+          <!-- /.row-->
+          <script>
+            window.onload = function() {
+
+              var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                theme: "light2", // "light1", "light2", "dark1", "dark2"
+                title: {
+                  text: "Date"
+                },
+                axisY: {
+                  title: "Wait",
+                  includeZero: false
+                },
+                data: [{
+                  type: "column",
+                  dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+                }]
+              });
+              chart.render();
+
             }
-            ?>
-          </tbody>
-        </table>
-      </div>
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item active">Active Parties</li>
-        <!-- Breadcrumb Menu-->
-      </ol>
-      <div class="container-fluid">
-        <table class="table table-bordered" id="js-table">
-          <thead class="thead-light">
-            <tr>
-              <th>Order</th>
-              <th>Leader </th>
-              <th>Size</th>
-              <th>Server</th>
-              <th>Table</th>
-              <th>Wait Time</th>
-              <th>Longest Wait</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-            $i = 0;
-            while ($line = pg_fetch_array($activelist, null, PGSQL_ASSOC)) {
-              foreach ($line as $col_value) {
-                echo "<td>$col_value</td>";
-                $i++;
-                if ($i > 6) {
-                  echo "</tr>";
-                  echo "<tr>";
-                  $i = 0;
-                }
-              }
-            }
-            ?>
-          </tbody>
-        </table>
+          </script>
+          <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+          <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        </div>
       </div>
     </main>
   </div>
@@ -281,8 +258,8 @@ $meals = pg_fetch_array($temp4, null, PGSQL_ASSOC);
   <script src="node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
   <script src="node_modules/@coreui/coreui/dist/js/coreui.min.js"></script>
 
-        <!-- Bootstrap CSS CDN -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
 
 </body>

@@ -9,6 +9,7 @@ $(document).ready(function () {
             if (data[0]) {
                 $('#defaultForm-pass1').val(data[0][1] + " " + data[0][2]);
                 $('#hidden-id1').val(data[0][4]);
+                $('#hidden-ids1').val(data[0][0]);
                 employees[data[0][1]] = {
                     id: data[0][0]
                 }
@@ -16,6 +17,7 @@ $(document).ready(function () {
             if (data[1]) {
                 $('#defaultForm-pass2').val(data[1][1] + " " + data[1][2]);
                 $('#hidden-id2').val(data[1][4]);
+                $('#hidden-ids2').val(data[1][0]);
                 employees[data[1][1]] = {
                     id: data[1][0]
                 }
@@ -23,6 +25,7 @@ $(document).ready(function () {
             if (data[2]) {
                 $('#defaultForm-pass3').val(data[2][1] + " " + data[2][2]);
                 $('#hidden-id3').val(data[2][4]);
+                $('#hidden-ids3').val(data[2][0]);
                 employees[data[2][1]] = {
                     id: data[2][0]
                 }

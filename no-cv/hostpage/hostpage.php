@@ -171,7 +171,13 @@
                                 required> -->
                             <select name="serverAssigned" class="custom-select mr-sm-2">
                                 <option>Choose Sever</option>
-			    	            <option value="4">Victor</option>
+                                <option value="4">Victor</option>
+                                <option value="5">Jay Johnson</option>
+                                <option value="6">Carina Sapling</option>
+                                <option value="7">Brandon Diaz</option>
+                                <option value="8">Arielle Von</option>
+                                <option value="9">Jill Smith</option>
+                                <option value="10">John Doe</option>
                             </select>
                             <input type="number" class="form-control" name="tableNumber"
                                 placeholder="Enter Table Number" required>

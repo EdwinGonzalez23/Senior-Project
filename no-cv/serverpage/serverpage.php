@@ -69,12 +69,11 @@ function GetTableInfo($TableNum, $dbconn, &$Tables, $humanid) {
     $result = pg_query($dbconn, $serverNameQuery);
     $serverName = pg_fetch_row($result);
     $Tables[$TableNum-1][0] = $serverName;
-    $Tables[$TableNum-1][0] = null;
 
     // Find LWT
     $result = pg_query($dbconn, $longestWaitTime);
     $lwt = pg_fetch_row($result);
-
+    
     //Find Num Guest, LWT, CWT
     $result = pg_query($dbconn, $table1);
     $row = pg_fetch_array($result);
@@ -419,9 +418,7 @@ var ts4 = "<?php echo $Tables[3][6]?>";
 var tm4 = "<?php echo $Tables[3][5]?>";
 console.log(ts4)
 console.log(tm4)
-if (x == 0 && x2 == 0) {
-    $('#warning-t-header').html("Unassigned")
-} else {
+
     window.onload = (function (e) {
         setInterval(function () {
             if (x == 0 && x2 == 0) { 
@@ -466,7 +463,7 @@ if (x == 0 && x2 == 0) {
             }
         }, 1000);
     });
-}
+
 // if (ts2 == 0 && tm2 == 0) {
 //     $('#warning-t2-header').html("Unassigned")
 // } else {

@@ -40,8 +40,8 @@ $ch2; $cm2; $s2;
 $ch3; $cm3; $s3;
 $ch4; $cm4; $s4;
 
-list($lh, $lm, $ls)=preg_split('[:]',$LongestWaitTIme); // Longest Record Time
-list($ch, $cm, $cs)=preg_split('[:]',$CurrentWaitTime);// Current Time (may be longest but not recroded)
+//list($lh, $lm, $ls)=preg_split('[:]',$LongestWaitTIme); // Longest Record Time
+//list($ch, $cm, $cs)=preg_split('[:]',$CurrentWaitTime);// Current Time (may be longest but not recroded)
 
 
 $Tables = array (
@@ -514,34 +514,40 @@ setInterval(function () {
         $("#bgDiv").css("background-color", "#32CD32")
     else if(x2 < 5 )
         $("#bgDiv").css("background-color", "Yellow")
-    else 
+    else if(x2 <10)
         $("#bgDiv").css("background-color", "Red")
-
-        if (ts2 < 3)
+	}, 1000);
+setInterval(function () {	
+	var bgColor = $("#bgDiv2").css("background-color");
+        if (tm2 < 3)
         $("#bgDiv2").css("background-color", "#32CD32")
-    else if(ts2 < 5 )
+    else if(tm2 < 5 )
         $("#bgDiv2").css("background-color", "Yellow")
-    else 
+    else if(tm2 < 10)
         $("#bgDiv2").css("background-color", "Red")
-
-        if (ts3 < 3)
+    }, 1000);
+setInterval(function () {	
+	var bgColor = $("#bgDiv3").css("background-color");
+        if (tm3 < 3)
         $("#bgDiv3").css("background-color", "#32CD32")
-    else if(ts3 < 5 )
+    else if(tm3 < 5 )
         $("#bgDiv3").css("background-color", "Yellow")
-    else 
+    else if(tm3 <10 )
         $("#bgDiv3").css("background-color", "Red")
-
-        if (ts4 < 3)
+	}, 1000);
+setInterval(function () {	
+	var bgColor = $("#bgDiv4").css("background-color");
+        if (tm4 < 3)
         $("#bgDiv4").css("background-color", "#32CD32")
-    else if(ts4 < 5 )
+    else if(tm4 < 5 )
         $("#bgDiv4").css("background-color", "Yellow")
-    else 
+    else if(tm4 <10)
         $("#bgDiv4").css("background-color", "Red")
 }, 1000);
 
 
 //table 2
-var j = 1;
+/*var j = 1;
 var j2 = 0;
 $("#startButton2").click(function (e) {
         setInterval(function () {
@@ -612,7 +618,7 @@ setInterval(function () {
     else
         $("#bgDiv4").css("background-color", "Red")
 }, 1000);
-
+*/
             </script>
 
             <!-- Logout -->
